@@ -9,8 +9,10 @@ public class Constants {
     public static final double TICKS_PER_ME = TICKS_NUM / WHEEL_DIAMETER_ME;
 
     //Names
-    public static final String LEFT_DRIVE_NAME = "leftMotor";
-    public static final String RIGHT_DRIVE_NAME = "rightMotor";
+    public static final String FRONT_LEFT_DRIVE_NAME = "frontLeftMotor";
+    public static final String FRONT_RIGHT_DRIVE_NAME = "frontRightMotor";
+    public static final String BACK_RIGHT_DRIVE_NAME = "backRightMotor";
+    public static final String BACK_LEFT_DRIVE_NAME = "backLeftMotor";
     public static final String SHOOTER_NAME = "shooterMotor";
     public static final String KICKER_NAME = "kickerMotor";
 
