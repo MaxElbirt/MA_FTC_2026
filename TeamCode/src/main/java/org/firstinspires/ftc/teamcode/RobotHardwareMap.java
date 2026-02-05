@@ -4,18 +4,21 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class RobotHardwareMap {
-
+    public DcMotor intakeMotor = null;
     public DcMotor frontLeftMotor = null;
     public DcMotor frontRightMotor = null;
     public DcMotor backLeftMotor = null;
     public DcMotor backRightMotor = null;
-    public DcMotor shooterMotor = null;
+    public DcMotor shooterMotor1 = null;
+    public DcMotor shooterMotor2 = null;
     public DcMotor kickerMotor = null;
     public IMU imu = null;
+    public Servo hood = null;
     public HardwareMap localHardwareMap = null;
     public RobotHardwareMap(){}
     public void init(HardwareMap maHardwareMap){
@@ -35,7 +38,11 @@ public class RobotHardwareMap {
         backLeftMotor = maHardwareMap.get(DcMotor.class, Constants.BACK_LEFT_DRIVE_NAME);
         backRightMotor = maHardwareMap.get(DcMotor.class, Constants.BACK_RIGHT_DRIVE_NAME);
         kickerMotor = maHardwareMap.get(DcMotor.class, Constants.KICKER_NAME);
-        shooterMotor = maHardwareMap.get(DcMotor.class, Constants.SHOOTER_NAME);
+        shooterMotor1 = maHardwareMap.get(DcMotor.class, Constants.SHOOTER1_NAME);
+        shooterMotor2 = maHardwareMap.get(DcMotor.class, Constants.SHOOTER2_NAME);
+        intakeMotor = maHardwareMap.get(DcMotor.class, Constants.INTAKE_NAME);
+        hood = maHardwareMap.get(Servo.class, Constants.SERVO_NAME);
+
 
         //Drive Motor Direction Setting
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -49,7 +56,7 @@ public class RobotHardwareMap {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         kickerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooterMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         //Starting Power For All Motors
         frontLeftMotor.setPower(0);
@@ -57,7 +64,7 @@ public class RobotHardwareMap {
         backRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         kickerMotor.setPower(0);
-        shooterMotor.setPower(0);
+        shooterMotor1.setPower(0);
 
 
     }

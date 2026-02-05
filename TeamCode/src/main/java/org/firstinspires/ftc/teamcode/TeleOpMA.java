@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @TeleOp
 public class TeleOpMA extends LinearOpMode {
@@ -22,7 +19,7 @@ public class TeleOpMA extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            marathonMap.shooterMotor.setPower(1);
+            marathonMap.shooterMotor1.setPower(1);
             marathonMap.kickerMotor.setPower(-1);
 
 
