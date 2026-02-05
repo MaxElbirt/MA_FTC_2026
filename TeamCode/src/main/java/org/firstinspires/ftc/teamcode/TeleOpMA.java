@@ -34,6 +34,8 @@ public class TeleOpMA extends LinearOpMode {
             marathonMap.backLeftMotor.setPower(backLeftPower);
             marathonMap.frontRightMotor.setPower(frontRightPower);
             marathonMap.backRightMotor.setPower(backRightPower);
+            marathonMap.shooterMotor.setPower(1);
+            marathonMap.kickerMotor.setPower(-1);
         }
     }
 }
