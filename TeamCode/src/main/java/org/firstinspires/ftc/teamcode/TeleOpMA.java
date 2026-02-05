@@ -14,11 +14,21 @@ public class TeleOpMA extends LinearOpMode {
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
 
+
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+
+
+            marathonMap.shooterMotor.setPower(1);
+            marathonMap.kickerMotor.setPower(-1);
+
+
+
+
+
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
