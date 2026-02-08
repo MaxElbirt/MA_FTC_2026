@@ -42,6 +42,11 @@ public class TeleOpMA extends LinearOpMode {
             marathonMap.backLeftMotor.setPower(backLeftPower);
             marathonMap.frontRightMotor.setPower(frontRightPower);
             marathonMap.backRightMotor.setPower(backRightPower);
+
+            //reseting imu yaw
+            if (gamepad1.options){
+                marathonMap.imu.resetYaw();
+            }
         }
     }
 }
