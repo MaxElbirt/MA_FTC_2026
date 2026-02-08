@@ -18,9 +18,11 @@ public class RobotHardwareMap {
     public IMU imu = null;
     public HardwareMap localHardwareMap = null;
     public RobotHardwareMap(){}
+
     public void init(HardwareMap maHardwareMap){
         //Saving Local Copy Of Hardware Map
         localHardwareMap = maHardwareMap;
+
         //IMU Setup
         imu = maHardwareMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot.LogoFacingDirection logo = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;

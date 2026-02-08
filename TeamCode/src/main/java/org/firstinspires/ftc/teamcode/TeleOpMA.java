@@ -23,13 +23,21 @@ public class TeleOpMA extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
 
-            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-            double frontLeftPower = (y + x + rx) / denominator;
-            double backLeftPower = (y - x + rx) / denominator;
-            double frontRightPower = (y - x - rx) / denominator;
-            double backRightPower = (y + x - rx) / denominator;
+            //changing rotation, correcting to north of field
+            double currHeading = marathonMap.getHeading();
+            double rotateY = y*Math.cos(-currHeading) - y*Math.sin(-currHeading);
+            double rotateX = x*Math.sin(-currHeading) + y*Math.cos(-currHeading);
 
-            //Marathon Hardware Map
+            //creating denominator for normalization of stick values (see below)
+            double denominator = Math.max(Math.abs(rotateY) + Math.abs(rotateX) + Math.abs(rx), 1);
+
+            //Normalizing to balance effect of stick values
+            double frontLeftPower = (rotateY + rotateX + rx) / denominator;
+            double backLeftPower = (rotateY - rotateX + rx) / denominator;
+            double frontRightPower = (rotateY - rotateX - rx) / denominator;
+            double backRightPower = (rotateY + rotateX - rx) / denominator;
+
+            //Passing power to motor
             marathonMap.frontLeftMotor.setPower(frontLeftPower);
             marathonMap.backLeftMotor.setPower(backLeftPower);
             marathonMap.frontRightMotor.setPower(frontRightPower);
