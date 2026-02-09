@@ -20,8 +20,9 @@ public class TeleOpMA extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-
-
+            //start of shooter{
+            // if L1 is pressed it activates the shooter.
+            // if b is pressed on the controller then the shooter stops.
             if(gamepad1.right_bumper){
                 marathonMap.shooterMotor1.setVelocity(-1500);
                 marathonMap.shooterMotor2.setVelocity(-1500);
@@ -30,37 +31,56 @@ public class TeleOpMA extends LinearOpMode {
                 marathonMap.shooterMotor2.setVelocity(0);
 
             }
+            // }end of shooter
 
 
-
-
+            // start of forward kicker{
+            // if L2 is pressed, the kicker activates, otherwise it doesn't
             if(gamepad1.left_trigger_pressed){
                 marathonMap.kickerMotor.setPower(-1);
             }else{
                 marathonMap.kickerMotor.setPower(0);
             }
+            // }end of forward kicker
+
+            // start of hood{
             double hoodIncrement = 0.2;
+            // if arrow up is pressed on the controller, the hood goes up
             if (gamepad1.dpad_up) {
-                // Get current position and add the increment, ensuring it doesn't exceed 1.0
+                // Get current position and add the increment, ensuring it doesn't exceed 0.45 (guessed value, check again)
                 marathonMap.hood.setPosition(Math.max(0.45, marathonMap.hood.getPosition() + hoodIncrement));
+            // if arrow down is pressed on the controller, the hood goes down
             } else if (gamepad1.dpad_down) {
                 //  Get current position and subtract the increment, ensuring it doesn't go below 0.0
                 marathonMap.hood.setPosition(Math.min(0.0, marathonMap.hood.getPosition() - hoodIncrement));
-
             }
+            // }end of hood
 
 
+            // beginning of reverse kicker{
+            // if a is pressed on the controller then the kicker spins backwards to prevent clogging
             if(gamepad1.a){
                 marathonMap.kickerMotor.setPower(1);
             }else{
                 marathonMap.kickerMotor.setPower(0);
             }
+            // if a isn't pressed then the kicker stops
+            // check for conflict with the forward kicker button
+            // }end of reverse kicker
 
+
+
+            //start of intake{
+            // if right trigger is pressed on controller then intake activates
             if(gamepad1.right_trigger_pressed){
                 marathonMap.intakeMotor.setPower(1);
             }else{
                 marathonMap.intakeMotor.setPower(0);
             }
+            // }end of intake
+
+
+
 
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
