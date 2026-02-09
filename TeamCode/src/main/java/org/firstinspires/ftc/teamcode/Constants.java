@@ -13,8 +13,10 @@ public class Constants {
     public static final String FRONT_RIGHT_DRIVE_NAME = "frontRightMotor";
     public static final String BACK_RIGHT_DRIVE_NAME = "backRightMotor";
     public static final String BACK_LEFT_DRIVE_NAME = "backLeftMotor";
-    public static final String SHOOTER_NAME = "shooterMotor";
+    public static final String SHOOTER_NAME1 = "shooterMotor1";
+    public static final String SHOOTER_NAME2 = "shooterMotor2";
     public static final String KICKER_NAME = "kickerMotor";
+    public static final String INTAKE = "intakeMotor";
 
     //Speeds
     public static final int DRIVE_SPEED = 100;

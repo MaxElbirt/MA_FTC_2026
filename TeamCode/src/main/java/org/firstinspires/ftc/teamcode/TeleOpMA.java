@@ -43,6 +43,25 @@ public class TeleOpMA extends LinearOpMode {
             marathonMap.frontRightMotor.setPower(frontRightPower);
             marathonMap.backRightMotor.setPower(backRightPower);
 
+            if (gamepad1.a == true){
+                marathonMap.shooterMotor1.setVelocity(1400);
+                marathonMap.shooterMotor2.setVelocity(1400);
+            } else if (gamepad1.x == true) {
+                marathonMap.shooterMotor1.setVelocity(0);
+                marathonMap.shooterMotor2.setVelocity(0);
+            }
+
+            while (gamepad1.b == true){
+                marathonMap.kickerMotor.setPower(0.5);
+            }
+
+            while (gamepad1.y == true){
+                marathonMap.intakeMotor.setPower(0.5);
+            }
+
+
+
+
             //resetting imu yaw ----> options button
             if (gamepad1.options){
                 marathonMap.imu.resetYaw();
