@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class TeleOpMA extends LinearOpMode {
@@ -19,11 +20,47 @@ public class TeleOpMA extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-            marathonMap.shooterMotor1.setPower(1);
-            marathonMap.kickerMotor.setPower(-1);
+
+
+            if(gamepad1.right_bumper){
+                marathonMap.shooterMotor1.setVelocity(-1500);
+                marathonMap.shooterMotor2.setVelocity(-1500);
+            }else if(gamepad1.b){
+                marathonMap.shooterMotor1.setVelocity(0);
+                marathonMap.shooterMotor2.setVelocity(0);
+
+            }
 
 
 
+
+            if(gamepad1.left_trigger_pressed){
+                marathonMap.kickerMotor.setPower(-1);
+            }else{
+                marathonMap.kickerMotor.setPower(0);
+            }
+            double hoodIncrement = 0.2;
+            if (gamepad1.dpad_up) {
+                // Get current position and add the increment, ensuring it doesn't exceed 1.0
+                marathonMap.hood.setPosition(Math.max(0.45, marathonMap.hood.getPosition() + hoodIncrement));
+            } else if (gamepad1.dpad_down) {
+                //  Get current position and subtract the increment, ensuring it doesn't go below 0.0
+                marathonMap.hood.setPosition(Math.min(0.0, marathonMap.hood.getPosition() - hoodIncrement));
+
+            }
+
+
+            if(gamepad1.a){
+                marathonMap.kickerMotor.setPower(1);
+            }else{
+                marathonMap.kickerMotor.setPower(0);
+            }
+
+            if(gamepad1.right_trigger_pressed){
+                marathonMap.intakeMotor.setPower(1);
+            }else{
+                marathonMap.intakeMotor.setPower(0);
+            }
 
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed

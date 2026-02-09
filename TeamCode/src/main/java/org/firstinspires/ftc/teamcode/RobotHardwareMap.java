@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -14,14 +15,17 @@ public class RobotHardwareMap {
     public DcMotor frontRightMotor = null;
     public DcMotor backLeftMotor = null;
     public DcMotor backRightMotor = null;
-    public DcMotor shooterMotor1 = null;
-    public DcMotor shooterMotor2 = null;
+    public DcMotorEx shooterMotor1 = null;
+    public DcMotorEx shooterMotor2 = null;
     public DcMotor kickerMotor = null;
     public IMU imu = null;
     public Servo hood = null;
     public HardwareMap localHardwareMap = null;
     public RobotHardwareMap(){}
     public void init(HardwareMap maHardwareMap){
+
+
+
         //Saving Local Copy Of Hardware Map
         localHardwareMap = maHardwareMap;
         //IMU Setup
@@ -38,8 +42,8 @@ public class RobotHardwareMap {
         backLeftMotor = maHardwareMap.get(DcMotor.class, Constants.BACK_LEFT_DRIVE_NAME);
         backRightMotor = maHardwareMap.get(DcMotor.class, Constants.BACK_RIGHT_DRIVE_NAME);
         kickerMotor = maHardwareMap.get(DcMotor.class, Constants.KICKER_NAME);
-        shooterMotor1 = maHardwareMap.get(DcMotor.class, Constants.SHOOTER1_NAME);
-        shooterMotor2 = maHardwareMap.get(DcMotor.class, Constants.SHOOTER2_NAME);
+        shooterMotor1 = maHardwareMap.get(DcMotorEx.class, Constants.SHOOTER1_NAME);
+        shooterMotor2 = maHardwareMap.get(DcMotorEx.class, Constants.SHOOTER2_NAME);
         intakeMotor = maHardwareMap.get(DcMotor.class, Constants.INTAKE_NAME);
         hood = maHardwareMap.get(Servo.class, Constants.SERVO_NAME);
 
