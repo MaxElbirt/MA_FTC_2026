@@ -43,7 +43,7 @@ public class RobotHardwareMap {
         kickerMotor = maHardwareMap.get(DcMotor.class, Constants.KICKER_NAME);
         shooterMotor1 = maHardwareMap.get(DcMotorEx.class, Constants.SHOOTER_NAME1);
         shooterMotor2 = maHardwareMap.get(DcMotorEx.class, Constants.SHOOTER_NAME2);
-        intakeMotor = maHardwareMap.get(DcMotor.class, Constants.KICKER_NAME);
+        intakeMotor = maHardwareMap.get(DcMotor.class, Constants.INTAKE);
 
         //Drive Motor Direction Setting
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
