@@ -24,7 +24,7 @@ public class TeleOpMA extends LinearOpMode {
             // if L1 is pressed it activates the shooter.
             // if b is pressed on the controller then the shooter stops.
             if(gamepad1.right_bumper){
-                marathonMap.shooterMotor1.setVelocity(-1500);
+                marathonMap.shooterMotor1.setVelocity(1500);
                 marathonMap.shooterMotor2.setVelocity(-1500);
             }else if(gamepad1.b){
                 marathonMap.shooterMotor1.setVelocity(0);
@@ -34,33 +34,28 @@ public class TeleOpMA extends LinearOpMode {
             // }end of shooter
 
 
-            // start of forward kicker{
-            // if L2 is pressed, the kicker activates, otherwise it doesn't
-            if(gamepad1.left_trigger_pressed){
-                marathonMap.kickerMotor.setPower(-1);
-            }else{
-                marathonMap.kickerMotor.setPower(0);
-            }
-            // }end of forward kicker
 
             // start of hood{
-            double hoodIncrement = 0.2;
+            double hoodIncrement = 0.0025;
             // if arrow up is pressed on the controller, the hood goes up
             if (gamepad1.dpad_up) {
                 // Get current position and add the increment, ensuring it doesn't exceed 0.45 (guessed value, check again)
-                marathonMap.hood.setPosition(Math.max(0.45, marathonMap.hood.getPosition() + hoodIncrement));
+                double newPosition = Math.min(0.45, marathonMap.hood.getPosition() + hoodIncrement);
+                marathonMap.hood.setPosition(newPosition);
             // if arrow down is pressed on the controller, the hood goes down
             } else if (gamepad1.dpad_down) {
                 //  Get current position and subtract the increment, ensuring it doesn't go below 0.0
-                marathonMap.hood.setPosition(Math.min(0.0, marathonMap.hood.getPosition() - hoodIncrement));
+                double newPosition = Math.max(0.0, marathonMap.hood.getPosition() - hoodIncrement);
+                marathonMap.hood.setPosition(newPosition);
             }
             // }end of hood
 
-
             // beginning of reverse kicker{
             // if a is pressed on the controller then the kicker spins backwards to prevent clogging
-            if(gamepad1.a){
+            if(gamepad1.a) {
                 marathonMap.kickerMotor.setPower(1);
+            }else if (gamepad1.left_trigger_pressed){
+                marathonMap.kickerMotor.setPower(-1);
             }else{
                 marathonMap.kickerMotor.setPower(0);
             }
@@ -73,15 +68,11 @@ public class TeleOpMA extends LinearOpMode {
             //start of intake{
             // if right trigger is pressed on controller then intake activates
             if(gamepad1.right_trigger_pressed){
-                marathonMap.intakeMotor.setPower(1);
+                marathonMap.intakeMotor.setPower(-1);
             }else{
                 marathonMap.intakeMotor.setPower(0);
             }
             // }end of intake
-
-
-
-
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
