@@ -43,7 +43,7 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.backRightMotor.setPower(backRightPower);
 
 
-            if (gamepad1.a == true) {
+            if (gamepad1.right_bumper == true) {
                 marathonMap.shooterMotor1.setVelocity(1500);
                 marathonMap.shooterMotor2.setVelocity(-1500);
             } else if (gamepad1.x == true) {
@@ -52,19 +52,15 @@ public class TeleOpMAnew extends LinearOpMode {
             }
 
 
-
             if (gamepad1.left_trigger_pressed) {
-             marathonMap.kickerMotor.setPower(-0.5);
+                marathonMap.kickerMotor.setPower(-0.9);
             } else if (gamepad1.left_bumper) {
-             marathonMap.kickerMotor.setPower(-0.5);
+                marathonMap.kickerMotor.setPower(-0.9);
+            }else if (gamepad1.y) {
+                marathonMap.kickerMotor.setPower(0.9);
             } else {
-                marathonMap.kickerMotor.setPower(0);
+                marathonMap.kickerMotor.setPower(0.0);
             }
-
-
-
-
-
 
 
             if (gamepad1.right_trigger_pressed) {
@@ -75,8 +71,7 @@ public class TeleOpMAnew extends LinearOpMode {
 
 
 
-
-                    double hoodposition = marathonMap.hood.getPosition();
+            double hoodposition = marathonMap.hood.getPosition();
                     double hoodincrement = 0.005;
                     if (gamepad1.dpad_up){
                         marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
