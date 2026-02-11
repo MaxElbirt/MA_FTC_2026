@@ -19,10 +19,6 @@ public class TeleOpMAnew extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            boolean kickerOn = false;     // current state
-            boolean lastB = false;
-            boolean lastY = false;          // previous button state
-            boolean intakeOn = false;        // previous button state
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
@@ -48,56 +44,38 @@ public class TeleOpMAnew extends LinearOpMode {
 
 
             if (gamepad1.a == true) {
-                marathonMap.shooterMotor1.setVelocity(1400);
-                marathonMap.shooterMotor2.setVelocity(1400);
+                marathonMap.shooterMotor1.setVelocity(1500);
+                marathonMap.shooterMotor2.setVelocity(-1500);
             } else if (gamepad1.x == true) {
                 marathonMap.shooterMotor1.setVelocity(0);
                 marathonMap.shooterMotor2.setVelocity(0);
             }
 
-            boolean currentB = gamepad1.left_bumper;
-            boolean currentX = gamepad1.left_trigger_pressed;
 
-            if (currentB) {
 
-            } else if (currentX) {
-
+            if (gamepad1.left_trigger_pressed) {
+             marathonMap.kickerMotor.setPower(-0.5);
+            } else if (gamepad1.left_bumper) {
+             marathonMap.kickerMotor.setPower(-0.5);
             } else {
                 marathonMap.kickerMotor.setPower(0);
             }
 
 
-            if (currentB && !lastB)
-                kickerOn = !kickerOn;
-
-            if (kickerOn) {
-                marathonMap.kickerMotor.setPower(-0.9);
-            } else {
-                marathonMap.kickerMotor.setPower(0.0);
-            }
-
-            boolean currentY = gamepad1.right_trigger_pressed;
-
-            if (currentY && !lastY)
-                intakeOn = !intakeOn;
 
 
-            if (intakeOn) {
+
+
+
+            if (gamepad1.right_trigger_pressed) {
                 marathonMap.intakeMotor.setPower(-0.8);
             } else {
                 marathonMap.intakeMotor.setPower(0.0);
             }
 
 
-            boolean currentIdle = gamepad1.y;
-            {
 
-                if (currentIdle) {
-                    marathonMap.kickerMotor.setPower(0.9);
-                    marathonMap.intakeMotor.setPower(0.9);
-                } else {
-                    marathonMap.kickerMotor.setPower(0.0);
-                    marathonMap.intakeMotor.setPower(0.0);
+
                     double hoodposition = marathonMap.hood.getPosition();
                     double hoodincrement = 0.005;
                     if (gamepad1.dpad_up){
@@ -114,6 +92,6 @@ public class TeleOpMAnew extends LinearOpMode {
                 }
             }
         }
-    }
 
-}
+
+
