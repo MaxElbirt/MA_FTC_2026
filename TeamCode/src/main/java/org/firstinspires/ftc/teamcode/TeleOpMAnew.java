@@ -47,8 +47,7 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.backRightMotor.setPower(backRightPower);
 
 
-
-             if (gamepad1.a == true){
+            if (gamepad1.a == true) {
                 marathonMap.shooterMotor1.setVelocity(1400);
                 marathonMap.shooterMotor2.setVelocity(1400);
             } else if (gamepad1.x == true) {
@@ -56,37 +55,65 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.shooterMotor2.setVelocity(0);
             }
 
-            boolean currentB = gamepad1.b;
+            boolean currentB = gamepad1.left_bumper;
+            boolean currentX = gamepad1.left_trigger_pressed;
+
+            if (currentB) {
+
+            } else if (currentX) {
+
+            } else {
+                marathonMap.kickerMotor.setPower(0);
+            }
+
 
             if (currentB && !lastB)
                 kickerOn = !kickerOn;
 
-            if (kickerOn){
+            if (kickerOn) {
                 marathonMap.kickerMotor.setPower(-0.9);
             } else {
-               marathonMap.kickerMotor.setPower(0.0);
+                marathonMap.kickerMotor.setPower(0.0);
             }
 
-            boolean currentY = gamepad1.y;
+            boolean currentY = gamepad1.right_trigger_pressed;
 
             if (currentY && !lastY)
                 intakeOn = !intakeOn;
 
 
-
-            if (intakeOn){
+            if (intakeOn) {
                 marathonMap.intakeMotor.setPower(-0.8);
             } else {
                 marathonMap.intakeMotor.setPower(0.0);
             }
 
 
+            boolean currentIdle = gamepad1.y;
+            {
+
+                if (currentIdle) {
+                    marathonMap.kickerMotor.setPower(0.9);
+                    marathonMap.intakeMotor.setPower(0.9);
+                } else {
+                    marathonMap.kickerMotor.setPower(0.0);
+                    marathonMap.intakeMotor.setPower(0.0);
+                    double hoodposition = marathonMap.hood.getPosition();
+                    double hoodincrement = 0.005;
+                    if (gamepad1.dpad_up){
+                        marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
+                    }else if(gamepad1.dpad_down){
+                        marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
+                    }
+                }
 
 
-            //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
-            if (gamepad1.options){
-                marathonMap.imu.resetYaw();
+                //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
+                if (gamepad1.options) {
+                    marathonMap.imu.resetYaw();
+                }
             }
         }
     }
+
 }
