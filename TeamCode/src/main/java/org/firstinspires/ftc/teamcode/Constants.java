@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class Constants {
 
-    //** Hardware Names **//
+    //Drivetrain Constants
     public static final double WHEEL_DIAMETER_ME = 80;
     public static final double TICKS_NUM = 333;
     public static final double TICKS_PER_ME = TICKS_NUM / WHEEL_DIAMETER_ME;
@@ -29,7 +29,6 @@ public class Constants {
     //Limelight
     public static final double mountingHeightInch = 60;
     public static final double mountingAngleDeg = 30;
-    public static final double mountingAngleRad = Math.toRadians(mountingAngleDeg);
-
-
+    public static final double aprilTagHeightInch = 80;
+    public static final double steeringKP = 0.1;
 }

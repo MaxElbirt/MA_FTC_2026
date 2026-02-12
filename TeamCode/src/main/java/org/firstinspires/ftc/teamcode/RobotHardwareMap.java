@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class RobotHardwareMap {
+    public Limelight3A limelight = null;
     public DcMotor intakeMotor = null;
     public DcMotor frontLeftMotor = null;
     public DcMotor frontRightMotor = null;
@@ -22,10 +24,8 @@ public class RobotHardwareMap {
     public Servo hood = null;
     public HardwareMap localHardwareMap = null;
     public RobotHardwareMap(){}
+
     public void init(HardwareMap maHardwareMap){
-
-
-
         //Saving Local Copy Of Hardware Map
         localHardwareMap = maHardwareMap;
         //IMU Setup
@@ -46,6 +46,7 @@ public class RobotHardwareMap {
         shooterMotor2 = maHardwareMap.get(DcMotorEx.class, Constants.SHOOTER2_NAME);
         intakeMotor = maHardwareMap.get(DcMotor.class, Constants.INTAKE_NAME);
         hood = maHardwareMap.get(Servo.class, Constants.SERVO_NAME);
+        limelight = maHardwareMap.get(Limelight3A.class, Constants.Limelight);
 
 
         //Drive Motor Direction Setting
