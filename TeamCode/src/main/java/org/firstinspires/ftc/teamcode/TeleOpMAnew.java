@@ -44,9 +44,16 @@ public class TeleOpMAnew extends LinearOpMode {
 
 
             if (gamepad1.right_bumper == true) {
-                marathonMap.shooterMotor1.setVelocity(1500);
-                marathonMap.shooterMotor2.setVelocity(-1500);
+                marathonMap.shooterMotor1.setVelocity(1300);
+                marathonMap.shooterMotor2.setVelocity(-1300);
             } else if (gamepad1.x == true) {
+                marathonMap.shooterMotor1.setVelocity(0);
+                marathonMap.shooterMotor2.setVelocity(0);
+
+            } else if (gamepad1.y == true ) {
+                marathonMap.shooterMotor1.setVelocity(-950);
+                marathonMap.shooterMotor2.setVelocity(950);
+            } else {
                 marathonMap.shooterMotor1.setVelocity(0);
                 marathonMap.shooterMotor2.setVelocity(0);
             }
@@ -56,7 +63,7 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.kickerMotor.setPower(-0.9);
             } else if (gamepad1.left_bumper) {
                 marathonMap.kickerMotor.setPower(-0.9);
-            }else if (gamepad1.y) {
+            } else if (gamepad1.y) {
                 marathonMap.kickerMotor.setPower(0.9);
             } else {
                 marathonMap.kickerMotor.setPower(0.0);
@@ -65,28 +72,39 @@ public class TeleOpMAnew extends LinearOpMode {
 
             if (gamepad1.right_trigger_pressed) {
                 marathonMap.intakeMotor.setPower(-0.8);
+            } else if (gamepad1.y) {
+                marathonMap.intakeMotor.setPower(0.8);
             } else {
                 marathonMap.intakeMotor.setPower(0.0);
-            }
-
-
-
-            double hoodposition = marathonMap.hood.getPosition();
-                    double hoodincrement = 0.005;
-                    if (gamepad1.dpad_up){
-                        marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
-                    }else if(gamepad1.dpad_down){
-                        marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
-                    }
+                {
                 }
 
 
-                //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
-                if (gamepad1.options) {
-                    marathonMap.imu.resetYaw();
+                double hoodposition = marathonMap.hood.getPosition();
+                double hoodincrement = 0.005;
+                if (gamepad1.dpad_up) {
+                    marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
+                } else if (gamepad1.dpad_down) {
+                    marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
                 }
             }
+
+
+            //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
+            if (gamepad1.options) {
+                marathonMap.imu.resetYaw();
+                
+                
+                
+
+            }
+            telemetry.addData("hood pos: ", marathonMap.hood.getPosition());
+            telemetry.addData("shooter 1 velocity: ", marathonMap.shooterMotor1.getVelocity());
+            telemetry.addData("shooter 2 velocity: ", marathonMap.shooterMotor2.getVelocity());
+            telemetry.update();
         }
 
+    }
+}
 
 
