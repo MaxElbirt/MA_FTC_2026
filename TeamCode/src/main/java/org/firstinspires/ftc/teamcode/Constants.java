@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 public class Constants {
 
     //** Hardware Names **//
-
     public static final double WHEEL_DIAMETER_ME = 80;
     public static final double TICKS_NUM = 333;
     public static final double TICKS_PER_ME = TICKS_NUM / WHEEL_DIAMETER_ME;
