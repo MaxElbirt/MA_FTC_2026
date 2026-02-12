@@ -17,6 +17,7 @@ public class Constants {
     public static final String KICKER_NAME = "kickerMotor";
     public static final String INTAKE_NAME = "intakeMotor";
     public static final String SERVO_NAME = "hood";
+    public static final String Limelight = "limelight";
 
     //Speeds
     public static final int DRIVE_SPEED = 100;
@@ -24,6 +25,11 @@ public class Constants {
     public static final int SHOOTER_SPEED_FAR = 100;
     public static final int SHOOTER_SPEED_NEAR = 50;
     public static final int KICKER_SPEED = 100;
+
+    //Limelight
+    public static final double mountingHeightInch = 60;
+    public static final double mountingAngleDeg = 30;
+    public static final double mountingAngleRad = Math.toRadians(mountingAngleDeg);
 
 
 }
