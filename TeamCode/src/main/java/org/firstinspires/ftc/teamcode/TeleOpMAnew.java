@@ -19,10 +19,6 @@ public class TeleOpMAnew extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            boolean kickerOn = false;     // current state
-            boolean lastB = false;
-            boolean lastY = false;          // previous button state
-            boolean intakeOn = false;        // previous button state
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
@@ -48,45 +44,45 @@ public class TeleOpMAnew extends LinearOpMode {
 
 
 
-             if (gamepad1.a == true){
-                marathonMap.shooterMotor1.setVelocity(1400);
-                marathonMap.shooterMotor2.setVelocity(1400);
-            } else if (gamepad1.x == true) {
+            if(gamepad1.right_bumper){
+                marathonMap.shooterMotor2.setVelocity(-1450);
+                marathonMap.shooterMotor1.setVelocity(1450);
+            }else if(gamepad1.x){
                 marathonMap.shooterMotor1.setVelocity(0);
                 marathonMap.shooterMotor2.setVelocity(0);
+            }else if(gamepad1.a){
+                marathonMap.shooterMotor2.setVelocity(1300);
+                marathonMap.shooterMotor1.setVelocity(-1300);
+                marathonMap.kickerMotor.setPower(1);
+                marathonMap.intakeMotor.setPower(1);
+            }else if(gamepad1.right_trigger_pressed){
+                marathonMap.intakeMotor.setPower(-1);
+            }else if(gamepad1.left_trigger_pressed){
+                marathonMap.kickerMotor.setPower(-1);
+            }else{
+                marathonMap.kickerMotor.setPower(0);
+                marathonMap.intakeMotor.setPower(0);
+            }
+            double hoodposition = marathonMap.hood.getPosition();
+            double hoodincrement = 0.005;
+            if (gamepad1.dpad_up) {
+                marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
+            }else if(gamepad1.dpad_down){
+                marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
             }
 
-            boolean currentB = gamepad1.b;
-
-            if (currentB && !lastB)
-                kickerOn = !kickerOn;
-
-            if (kickerOn){
-                marathonMap.kickerMotor.setPower(-0.9);
-            } else {
-               marathonMap.kickerMotor.setPower(0.0);
-            }
-
-            boolean currentY = gamepad1.y;
-
-            if (currentY && !lastY)
-                intakeOn = !intakeOn;
-
-
-
-            if (intakeOn){
-                marathonMap.intakeMotor.setPower(-0.8);
-            } else {
-                marathonMap.intakeMotor.setPower(0.0);
-            }
-
-
-
+//            marathonMap.hood.setPosition(0);
 
             //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
-            if (gamepad1.options){
+            if (gamepad1.share){
                 marathonMap.imu.resetYaw();
             }
+            telemetry.addData("hood pos: ", hoodposition);
+            telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
+            telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
+            telemetry.update();
+            telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
         }
+
     }
 }
