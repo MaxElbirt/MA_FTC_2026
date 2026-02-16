@@ -39,7 +39,7 @@ public class LimelightSubSystem {
         if (!hasValidResult()) return 0;
 
         double tx = cachedResult.getTx();
-        return Constants.steeringKP * tx;
+        return Constants.STEERING_KP * tx;
     }
 
     //getting botpose

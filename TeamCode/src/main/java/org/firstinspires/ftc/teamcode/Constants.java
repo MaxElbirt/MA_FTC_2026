@@ -30,5 +30,6 @@ public class Constants {
     public static final double mountingHeightInch = 60;
     public static final double mountingAngleDeg = 30;
     public static final double aprilTagHeightInch = 80;
-    public static final double steeringKP = 0.1;
+    public static final double STEERING_KP = 0.1;
+    public static final double MAX_STEERING_POWER = 0.3;
 }

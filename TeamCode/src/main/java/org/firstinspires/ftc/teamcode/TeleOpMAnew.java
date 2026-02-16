@@ -20,6 +20,8 @@ public class TeleOpMAnew extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+            limelight.update();
+
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
@@ -49,7 +51,12 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.shooterMotor1.setVelocity(1450);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
-            }//STOP SHOOTER
+            }
+            else if(gamepad1.b && limelight.hasValidResult()){
+                rx = limelight.getSteeringToTarget();
+                rx = Math.max(-Constants.MAX_STEERING_POWER,Math.min(Constants.MAX_STEERING_POWER,rx));
+            }
+            //STOP SHOOTER
             else if(gamepad1.x){
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(0);
