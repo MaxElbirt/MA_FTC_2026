@@ -81,11 +81,15 @@ public class TeleOpMAnew extends LinearOpMode {
 
 
                 double hoodposition = marathonMap.hood.getPosition();
-                double hoodincrement = 0.005;
                 if (gamepad1.dpad_up) {
-                    marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
+                    marathonMap.hood.setPosition(Math.abs(0.45));
+                    marathonMap.shooterMotor1.setVelocity(-1300);
+                    marathonMap.shooterMotor1.setVelocity(1300);
                 } else if (gamepad1.dpad_down) {
-                    marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
+                    marathonMap.hood.setPosition(Math.abs(0.45));
+                    marathonMap.shooterMotor1.setVelocity(-1400);
+                    marathonMap.shooterMotor1.setVelocity(1400);
+
                 }
             }
 
