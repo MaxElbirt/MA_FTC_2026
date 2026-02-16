@@ -44,8 +44,16 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.frontRightMotor.setPower(frontRightPower);
             marathonMap.backRightMotor.setPower(backRightPower);
 
+            //REV SHOOTER UP WHEN IN RANGE
+            if(limelight.hasValidResult() && limelight.isOkToShoot()){
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
+            }
 
-            //FIRE SHOOTER FAR
+
+            //REV SHOOTER UP
             if(gamepad1.right_bumper){
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(1450);
@@ -62,7 +70,8 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.shooterMotor1.setVelocity(0);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
-            }//FIRE SHOOTER CLOSE
+            }
+            //FIRE SHOOTER CLOSE
             else if(gamepad1.a){
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(1450);
@@ -90,11 +99,6 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
             }else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
-            }
-
-            if (gamepad1.b){
-                double xPosToTarget = limelight.getSteeringToTarget();
-
             }
 
 //            marathonMap.hood.setPosition(0);
