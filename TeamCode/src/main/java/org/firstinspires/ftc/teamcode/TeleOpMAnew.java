@@ -94,6 +94,8 @@ public class TeleOpMAnew extends LinearOpMode {
             }
 
 
+
+
             //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
             if (gamepad1.options) {
                 marathonMap.imu.resetYaw();
@@ -105,6 +107,7 @@ public class TeleOpMAnew extends LinearOpMode {
             telemetry.addData("hood pos: ", marathonMap.hood.getPosition());
             telemetry.addData("shooter 1 velocity: ", marathonMap.shooterMotor1.getVelocity());
             telemetry.addData("shooter 2 velocity: ", marathonMap.shooterMotor2.getVelocity());
+            telemetry.addData("button pressed: ", marathonMap.getButtonPressed());
             telemetry.update();
         }
 

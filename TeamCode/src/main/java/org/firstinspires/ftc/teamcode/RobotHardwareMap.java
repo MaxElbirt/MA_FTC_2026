@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -22,6 +24,41 @@ public class RobotHardwareMap {
     public Servo hood = null;
     public HardwareMap localHardwareMap = null;
     public RobotHardwareMap(){}
+    public String getButtonPressed(){
+        String buttonPressed = "None";
+        if (gamepad1.a) {
+            buttonPressed = "a";
+        } else if (gamepad1.b) {
+            buttonPressed = "b";
+        } else if (gamepad1.x) {
+            buttonPressed = "x";
+        } else if (gamepad1.y) {
+            buttonPressed = "y";
+        } else if (gamepad1.dpad_up) {
+            buttonPressed = "dpad_up";
+        } else if (gamepad1.dpad_down) {
+            buttonPressed = "dpad_down";
+        } else if (gamepad1.dpad_left) {
+            buttonPressed = "dpad_left";
+        } else if (gamepad1.dpad_right) {
+            buttonPressed = "dpad_right";
+        } else if (gamepad1.left_bumper) {
+            buttonPressed = "left_bumper";
+        } else if (gamepad1.right_bumper) {
+            buttonPressed = "right_bumper";
+        } else if (gamepad1.left_trigger > 0.1) {
+            buttonPressed = "left_trigger";
+        } else if (gamepad1.right_trigger > 0.1) {
+            buttonPressed = "right_trigger";
+        } else if (gamepad1.options) {
+            buttonPressed = "options";
+        }
+        return buttonPressed;
+    }
+    // MODIFICATION END
+
+
+
     public void init(HardwareMap maHardwareMap){
 
 
@@ -72,6 +109,8 @@ public class RobotHardwareMap {
 
 
     }
+
+
 
     public double getHeading(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
