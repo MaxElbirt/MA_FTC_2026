@@ -92,13 +92,21 @@ public class TeleOpMAnew extends LinearOpMode {
             }
 
             double hoodposition = marathonMap.hood.getPosition();
-            double hoodincrement = 0.005;
 
-            //HOOD CONTROL
+
+
             if (gamepad1.dpad_up) {
-                marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
+                marathonMap.hood.setPosition((0.45));
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(-1400);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }else if(gamepad1.dpad_down){
-                marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
+                marathonMap.hood.setPosition((0.45));
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(-1300);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }
 
 //            marathonMap.hood.setPosition(0);
@@ -111,8 +119,9 @@ public class TeleOpMAnew extends LinearOpMode {
             telemetry.addData("hood pos: ", hoodposition);
             telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
             telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
-            telemetry.update();
             telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
+            telemetry.update();
+
         }
 
     }
