@@ -12,13 +12,13 @@ public class TeleOpMAnew extends LinearOpMode {
 
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
+        LimelightSubSystem limelight = new LimelightSubSystem(hardwareMap);
 
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
@@ -43,38 +43,51 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.backRightMotor.setPower(backRightPower);
 
 
-
+            //FIRE SHOOTER FAR
             if(gamepad1.right_bumper){
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(1450);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
-            }else if(gamepad1.x){
+            }//STOP SHOOTER
+            else if(gamepad1.x){
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(0);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
-            }else if(gamepad1.a){
+            }//FIRE SHOOTER CLOSE
+            else if(gamepad1.a){
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1300);
+                marathonMap.shooterMotor1.setVelocity(1450);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
                 marathonMap.kickerMotor.setPower(1);
                 marathonMap.intakeMotor.setPower(1);
-            }else if(gamepad1.right_trigger_pressed){
+            }//EXPELL BALLS FROM INTAKE
+            else if(gamepad1.right_trigger_pressed){
                 marathonMap.intakeMotor.setPower(-1);
-            }else if(gamepad1.left_trigger_pressed){
+            }//EXPELL BALLS FROM KICKER
+            else if(gamepad1.left_trigger_pressed){
                 marathonMap.kickerMotor.setPower(-1);
-            }else{
+            }//STOP KICKER AND INTAKE
+            else{
                 marathonMap.kickerMotor.setPower(0);
                 marathonMap.intakeMotor.setPower(0);
             }
+
             double hoodposition = marathonMap.hood.getPosition();
             double hoodincrement = 0.005;
+
+            //HOOD CONTROL
             if (gamepad1.dpad_up) {
                 marathonMap.hood.setPosition(Math.abs(Math.min(0.45, hoodposition + hoodincrement)));
             }else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition(Math.abs(Math.max(0.0, hoodposition - hoodincrement)));
+            }
+
+            if (gamepad1.b){
+                double xPosToTarget = limelight.getSteeringToTarget();
+
             }
 
 //            marathonMap.hood.setPosition(0);
@@ -83,6 +96,7 @@ public class TeleOpMAnew extends LinearOpMode {
             if (gamepad1.share){
                 marathonMap.imu.resetYaw();
             }
+
             telemetry.addData("hood pos: ", hoodposition);
             telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
             telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());

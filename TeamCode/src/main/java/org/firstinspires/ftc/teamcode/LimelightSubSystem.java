@@ -7,40 +7,53 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 public class LimelightSubSystem {
-    public RobotHardwareMap maRobotMap = new RobotHardwareMap();
-    public LimelightSubSystem(HardwareMap hardwareMap){
+    private RobotHardwareMap maRobotMap = new RobotHardwareMap();
+    private Limelight3A limelight;
+    private LLResult cachedResult;
+
+    public LimelightSubSystem(HardwareMap hardwareMap) {
         maRobotMap.init(hardwareMap);
+        limelight = maRobotMap.limelight;
     }
 
-    Limelight3A limelight = maRobotMap.limelight;
-
-    //Calculate Distance From AprilTag
-    public double getDistanceFromTarget(){
-        LLResult llResult = limelight.getLatestResult();
-        double ty = llResult.getTy();
-        double distance = (Constants.aprilTagHeightInch - Constants.mountingHeightInch) /
-                (Math.tan(Math.toRadians(Constants.mountingAngleDeg + ty)));
-
-        return distance;
+    //update method to make sure all data collected uniformly
+    public void update() {
+        cachedResult = limelight.getLatestResult();
     }
 
-    public double getSteeringToTarget(){
-        LLResult llResult = limelight.getLatestResult();
-        double tx = llResult.getTx();
+    public boolean hasValidResult() {
+        return cachedResult != null && cachedResult.isValid();
+    }
+
+    //get distance from target (no directrion)
+    public double getDistanceFromTarget() {
+        if (!hasValidResult()) return -1;
+
+        double ty = cachedResult.getTy();
+        return (Constants.aprilTagHeightInch - Constants.mountingHeightInch) /
+                Math.tan(Math.toRadians(Constants.mountingAngleDeg + ty));
+    }
+
+    //x axis steering correction
+    public double getSteeringToTarget() {
+        if (!hasValidResult()) return 0;
+
+        double tx = cachedResult.getTx();
         return Constants.steeringKP * tx;
     }
 
-    public double[] getFieldPosition(){
-        LLResult llResult = limelight.getLatestResult();
-        Pose3D pose = llResult.getBotpose();
-        double[] coordinates = {pose.getPosition().x, pose.getPosition().y};
-        return coordinates;
+    //getting botpose
+    public double[] getFieldPosition() {
+        if (!hasValidResult()) return null;
+
+        Pose3D pose = cachedResult.getBotpose();
+        if (pose == null) return null;
+
+        return new double[]{pose.getPosition().x, pose.getPosition().y};
     }
 
-    public boolean isOkToShoot(){
-        LLResult llResult = limelight.getLatestResult();
-        return llResult.isValid() && getDistanceFromTarget() < 98.4;
+    //is robot withing shooting range
+    public boolean isOkToShoot() {
+        return hasValidResult() && getDistanceFromTarget() < 98.4;
     }
-
-
 }
