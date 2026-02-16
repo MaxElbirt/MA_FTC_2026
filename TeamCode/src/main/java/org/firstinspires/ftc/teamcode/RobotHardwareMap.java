@@ -70,6 +70,8 @@ public class RobotHardwareMap {
         backLeftMotor.setPower(0);
         kickerMotor.setPower(0);
         shooterMotor1.setPower(0);
+        shooterMotor2.setPower(0);
+        shooterMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
