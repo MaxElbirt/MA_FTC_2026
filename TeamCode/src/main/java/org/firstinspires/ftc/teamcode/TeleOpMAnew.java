@@ -12,6 +12,10 @@ public class TeleOpMAnew extends LinearOpMode {
 
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
+        HelperFuncs marathonFuncs = null;
+        LimelightSubSystem limelight = new LimelightSubSystem(hardwareMap);
+        marathonFuncs = new HelperFuncs(marathonMap);
+
 
         waitForStart();
 
@@ -19,6 +23,7 @@ public class TeleOpMAnew extends LinearOpMode {
 
         while (opModeIsActive()) {
 
+            limelight.update();
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
@@ -42,76 +47,93 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.frontRightMotor.setPower(frontRightPower);
             marathonMap.backRightMotor.setPower(backRightPower);
 
+            //REV SHOOTER UP WHEN IN RANGE
+//            if(limelight.hasValidResult() && limelight.isOkToShoot()){
+//                double currentMotorPower = 0;
+//                marathonMap.shooterMotor1.setVelocity(1450);
+//                currentMotorPower = marathonMap.shooterMotor1.getPower();
+//                marathonMap.shooterMotor2.setPower(currentMotorPower);
+//            }
 
-            if (gamepad1.right_bumper == true) {
-                marathonMap.shooterMotor1.setVelocity(1300);
-                marathonMap.shooterMotor2.setVelocity(-1300);
-            } else if (gamepad1.x == true) {
+
+            //REV SHOOTER UP
+            if(gamepad1.right_bumper){
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
+            }
+//            else if(gamepad1.b && limelight.hasValidResult()){
+//                rx = limelight.getSteeringToTarget();
+//                rx = Math.max(-Constants.MAX_STEERING_POWER,Math.min(Constants.MAX_STEERING_POWER,rx));
+//            }
+            //STOP SHOOTER
+            else if(gamepad1.x){
+                double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(0);
-                marathonMap.shooterMotor2.setVelocity(0);
-
-            } else if (gamepad1.y == true ) {
-                marathonMap.shooterMotor1.setVelocity(-950);
-                marathonMap.shooterMotor2.setVelocity(950);
-            } else {
-                marathonMap.shooterMotor1.setVelocity(0);
-                marathonMap.shooterMotor2.setVelocity(0);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
             }
 
-
-            if (gamepad1.left_trigger_pressed) {
-                marathonMap.kickerMotor.setPower(-0.9);
-            } else if (gamepad1.left_bumper) {
-                marathonMap.kickerMotor.setPower(-0.9);
-            } else if (gamepad1.y) {
-                marathonMap.kickerMotor.setPower(0.9);
-            } else {
-                marathonMap.kickerMotor.setPower(0.0);
+            //CLEAR MECHANISM
+            else if(gamepad1.a){
+                marathonMap.hood.setPosition(0.45);
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+                marathonMap.kickerMotor.setPower(1);
+                marathonMap.intakeMotor.setPower(1);
             }
 
-
-            if (gamepad1.right_trigger_pressed) {
-                marathonMap.intakeMotor.setPower(-0.8);
-            } else if (gamepad1.y) {
-                marathonMap.intakeMotor.setPower(0.8);
-            } else {
-                marathonMap.intakeMotor.setPower(0.0);
-                {
-                }
-
-
-                double hoodposition = marathonMap.hood.getPosition();
-                if (gamepad1.dpad_up) {
-                    marathonMap.hood.setPosition(Math.abs(0.45));
-                    marathonMap.shooterMotor1.setVelocity(-1300);
-                    marathonMap.shooterMotor1.setVelocity(1300);
-                } else if (gamepad1.dpad_down) {
-                    marathonMap.hood.setPosition(Math.abs(0.45));
-                    marathonMap.shooterMotor1.setVelocity(-1400);
-                    marathonMap.shooterMotor1.setVelocity(1400);
-
-                }
+            //EXPELL BALLS FROM INTAKE
+            else if(gamepad1.right_trigger_pressed){
+                marathonMap.intakeMotor.setPower(-1);
+            }//EXPELL BALLS FROM KICKER
+            else if(gamepad1.left_trigger_pressed){
+                marathonMap.kickerMotor.setPower(-1);
+            }//STOP KICKER AND INTAKE
+            else{
+                marathonMap.kickerMotor.setPower(0);
+                marathonMap.intakeMotor.setPower(0);
             }
 
+            double hoodposition = marathonMap.hood.getPosition();
 
 
+
+            if (gamepad1.dpad_up) {
+                marathonMap.hood.setPosition((0.45));
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(-1400);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+            }else if(gamepad1.dpad_down){
+                marathonMap.hood.setPosition((0.45));
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(-1300);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+            }
+
+            marathonFuncs.setShooterVelocities(1400);
+
+//            marathonMap.hood.setPosition(0);
 
             //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
-            if (gamepad1.options) {
+            if (gamepad1.share){
                 marathonMap.imu.resetYaw();
-                
-                
-                
-
             }
-            telemetry.addData("hood pos: ", marathonMap.hood.getPosition());
-            telemetry.addData("shooter 1 velocity: ", marathonMap.shooterMotor1.getVelocity());
-            telemetry.addData("shooter 2 velocity: ", marathonMap.shooterMotor2.getVelocity());
+
+            telemetry.addData("hood pos: ", hoodposition);
+            telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
+            telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
+            telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
             telemetry.addData("button pressed: ", marathonMap.getButtonPressed());
             telemetry.update();
+
         }
+
 
     }
 }
-
-
