@@ -12,6 +12,11 @@ public class TeleOpMAnew extends LinearOpMode {
 
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
+        LimelightSubSystem limelight = new LimelightSubSystem(hardwareMap);
+        HelperFuncs helperfunc = new HelperFuncs();
+        helperfunc.init(hardwareMap);
+
+
 
         waitForStart();
 
@@ -19,10 +24,7 @@ public class TeleOpMAnew extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            boolean kickerOn = false;     // current state
-            boolean lastB = false;
-            boolean lastY = false;          // previous button state
-            boolean intakeOn = false;        // previous button state
+            limelight.update();
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1;
@@ -46,47 +48,86 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.frontRightMotor.setPower(frontRightPower);
             marathonMap.backRightMotor.setPower(backRightPower);
 
+            //REV SHOOTER UP WHEN IN RANGE
+            if(limelight.hasValidResult() && limelight.isOkToShoot()){
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
+            }
 
-
-             if (gamepad1.a == true){
-                marathonMap.shooterMotor1.setVelocity(1400);
-                marathonMap.shooterMotor2.setVelocity(1400);
-            } else if (gamepad1.x == true) {
+            helperfunc.setShooterVelocities(1400);
+            //REV SHOOTER UP
+            if(gamepad1.right_bumper){
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
+            }
+//            else if(gamepad1.b && limelight.hasValidResult()){
+//                rx = limelight.getSteeringToTarget();
+//                rx = Math.max(-Constants.MAX_STEERING_POWER,Math.min(Constants.MAX_STEERING_POWER,rx));
+//            }
+            //STOP SHOOTER
+            else if(gamepad1.x){
+                double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(0);
-                marathonMap.shooterMotor2.setVelocity(0);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
             }
 
-            boolean currentB = gamepad1.b;
-
-            if (currentB && !lastB)
-                kickerOn = !kickerOn;
-
-            if (kickerOn){
-                marathonMap.kickerMotor.setPower(-0.9);
-            } else {
-               marathonMap.kickerMotor.setPower(0.0);
+            else if (gamepad1.b){
+                marathonMap.hood.setPosition(0.0);
+            }
+            //CLEAR MECHANISM
+            else if(gamepad1.a) {
+                marathonMap.hood.setPosition(0.45);
+                marathonMap.shooterMotor1.setVelocity(-1450);
+                marathonMap.shooterMotor2.setPower(1450);
+                marathonMap.kickerMotor.setPower(1);
+                marathonMap.intakeMotor.setPower(1);
             }
 
-            boolean currentY = gamepad1.y;
-
-            if (currentY && !lastY)
-                intakeOn = !intakeOn;
-
-
-
-            if (intakeOn){
-                marathonMap.intakeMotor.setPower(-0.8);
-            } else {
-                marathonMap.intakeMotor.setPower(0.0);
+            //EXPELL BALLS FROM INTAKE
+            else if(gamepad1.right_trigger_pressed){
+                marathonMap.intakeMotor.setPower(-1);
+            }//EXPELL BALLS FROM KICKER
+            else if(gamepad1.left_trigger_pressed){
+                marathonMap.kickerMotor.setPower(-1);
+            }//STOP BALL KICKER AND INTAKE
+            else{
+                marathonMap.kickerMotor.setPower(0);
+                marathonMap.intakeMotor.setPower(0);
             }
 
+            if (gamepad1.dpad_up) {
+                marathonMap.hood.setPosition((0.45));
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+            }else if(gamepad1.dpad_down){
+                marathonMap.hood.setPosition((0.45));
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1200);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+            }
 
-
+//            marathonMap.hood.setPosition(0);
 
             //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
-            if (gamepad1.options){
+            if (gamepad1.share){
                 marathonMap.imu.resetYaw();
             }
+            double hoodposition = marathonMap.hood.getPosition();
+            telemetry.addData("hood pos: ", hoodposition);
+            telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
+            telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
+            telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
+            telemetry.update();
+
         }
+
     }
 }

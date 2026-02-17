@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class Constants {
 
-    //** Hardware Names **//
-
+    //Drivetrain Constants
     public static final double WHEEL_DIAMETER_ME = 80;
     public static final double TICKS_NUM = 333;
     public static final double TICKS_PER_ME = TICKS_NUM / WHEEL_DIAMETER_ME;
@@ -18,6 +17,7 @@ public class Constants {
     public static final String KICKER_NAME = "kickerMotor";
     public static final String INTAKE_NAME = "intakeMotor";
     public static final String SERVO_NAME = "hood";
+    public static final String Limelight = "limelight";
 
     //Speeds
     public static final int DRIVE_SPEED = 100;
@@ -26,5 +26,10 @@ public class Constants {
     public static final int SHOOTER_SPEED_NEAR = 50;
     public static final int KICKER_SPEED = 100;
 
-
+    //Limelight
+    public static final double mountingHeightInch = 60;
+    public static final double mountingAngleDeg = 30;
+    public static final double aprilTagHeightInch = 80;
+    public static final double STEERING_KP = 0.1;
+    public static final double MAX_STEERING_POWER = 0.3;
 }
