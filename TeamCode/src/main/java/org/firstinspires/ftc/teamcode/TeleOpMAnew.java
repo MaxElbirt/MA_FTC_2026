@@ -12,10 +12,9 @@ public class TeleOpMAnew extends LinearOpMode {
 
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
+        HelperFuncs marathonFuncs = null;
         LimelightSubSystem limelight = new LimelightSubSystem(hardwareMap);
-        HelperFuncs helperfunc = new HelperFuncs();
-        helperfunc.init(hardwareMap);
-
+        marathonFuncs = new HelperFuncs(marathonMap);
 
 
         waitForStart();
@@ -49,14 +48,14 @@ public class TeleOpMAnew extends LinearOpMode {
             marathonMap.backRightMotor.setPower(backRightPower);
 
             //REV SHOOTER UP WHEN IN RANGE
-            if(limelight.hasValidResult() && limelight.isOkToShoot()){
-                double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1450);
-                currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(currentMotorPower);
-            }
+//            if(limelight.hasValidResult() && limelight.isOkToShoot()){
+//                double currentMotorPower = 0;
+//                marathonMap.shooterMotor1.setVelocity(1450);
+//                currentMotorPower = marathonMap.shooterMotor1.getPower();
+//                marathonMap.shooterMotor2.setPower(currentMotorPower);
+//            }
 
-            helperfunc.setShooterVelocities(1400);
+
             //REV SHOOTER UP
             if(gamepad1.right_bumper){
                 double currentMotorPower = 0;
@@ -76,14 +75,13 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
             }
 
-            else if (gamepad1.b){
-                marathonMap.hood.setPosition(0.0);
-            }
             //CLEAR MECHANISM
-            else if(gamepad1.a) {
+            else if(gamepad1.a){
                 marathonMap.hood.setPosition(0.45);
-                marathonMap.shooterMotor1.setVelocity(-1450);
-                marathonMap.shooterMotor2.setPower(1450);
+                double currentMotorPower = 0;
+                marathonMap.shooterMotor1.setVelocity(1450);
+                currentMotorPower = marathonMap.shooterMotor1.getPower();
+                marathonMap.shooterMotor2.setPower(-currentMotorPower);
                 marathonMap.kickerMotor.setPower(1);
                 marathonMap.intakeMotor.setPower(1);
             }
@@ -94,25 +92,31 @@ public class TeleOpMAnew extends LinearOpMode {
             }//EXPELL BALLS FROM KICKER
             else if(gamepad1.left_trigger_pressed){
                 marathonMap.kickerMotor.setPower(-1);
-            }//STOP BALL KICKER AND INTAKE
+            }//STOP KICKER AND INTAKE
             else{
                 marathonMap.kickerMotor.setPower(0);
                 marathonMap.intakeMotor.setPower(0);
             }
 
+            double hoodposition = marathonMap.hood.getPosition();
+
+
+
             if (gamepad1.dpad_up) {
                 marathonMap.hood.setPosition((0.45));
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1450);
+                marathonMap.shooterMotor1.setVelocity(-1400);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition((0.45));
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1200);
+                marathonMap.shooterMotor1.setVelocity(-1300);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }
+
+            marathonFuncs.setShooterVelocities(1400);
 
 //            marathonMap.hood.setPosition(0);
 
@@ -120,14 +124,16 @@ public class TeleOpMAnew extends LinearOpMode {
             if (gamepad1.share){
                 marathonMap.imu.resetYaw();
             }
-            double hoodposition = marathonMap.hood.getPosition();
+
             telemetry.addData("hood pos: ", hoodposition);
             telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
             telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
             telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
+            telemetry.addData("button pressed: ", marathonMap.getButtonPressed());
             telemetry.update();
 
         }
+
 
     }
 }
