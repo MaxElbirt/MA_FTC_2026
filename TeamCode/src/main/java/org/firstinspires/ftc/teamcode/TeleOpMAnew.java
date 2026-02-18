@@ -118,7 +118,7 @@ public class TeleOpMAnew extends LinearOpMode {
             else if(gamepad1.b){
                 marathonMap.hood.setPosition((0.45));
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1800);
+                marathonMap.shooterMotor1.setVelocity(1900);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }
