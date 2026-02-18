@@ -67,16 +67,20 @@ public class TeleOpMAnew extends LinearOpMode {
 //            }
 
             //STOP SHOOTER
-            else if(gamepad1.x){
+            else if(gamepad1.x) {
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(0);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
+                marathonMap.hood.setPosition(0.0);
+            }else if(gamepad1.a){
+                marathonMap.hood.setPosition(0.45);
+                marathonMap.intakeMotor.setPower(1);
+                marathonMap.kickerMotor.setPower(1);
             }
 
-            else if (gamepad1.b){
-                marathonMap.hood.setPosition(0.0);
-            }
+
+
 
             //EXPELL BALLS FROM INTAKE
             else if(gamepad1.right_trigger_pressed){
@@ -102,7 +106,7 @@ public class TeleOpMAnew extends LinearOpMode {
             else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition((0.45));
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1100);
+                marathonMap.shooterMotor1.setVelocity(1300);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }
