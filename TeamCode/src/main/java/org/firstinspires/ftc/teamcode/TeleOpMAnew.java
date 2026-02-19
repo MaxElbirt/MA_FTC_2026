@@ -13,6 +13,9 @@ public class TeleOpMAnew extends LinearOpMode {
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
         LimelightSubSystem limelight = new LimelightSubSystem(hardwareMap);
+        HelperFuncs helper = new HelperFuncs();
+        helper.init(hardwareMap);
+
 
         waitForStart();
 
