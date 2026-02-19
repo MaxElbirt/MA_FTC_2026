@@ -56,9 +56,9 @@ public class TeleOpMAnew extends LinearOpMode {
             //REV SHOOTER UP
             if(gamepad1.right_bumper){
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1250);
+                marathonMap.shooterMotor1.setVelocity(1450);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+                marathonMap.shooterMotor2.setPower(currentMotorPower);
             }
 
 //            else if(gamepad1.b && limelight.hasValidResult()){
@@ -80,7 +80,7 @@ public class TeleOpMAnew extends LinearOpMode {
             //CLEAR MECHANISM
              else if(gamepad1.a) {
                     marathonMap.hood.setPosition(0.45);
-                    marathonMap.shooterMotor1.setVelocity(1250);
+                    marathonMap.shooterMotor1.setVelocity(1450);
                     double currentPower = marathonMap.shooterMotor1.getPower();
                     marathonMap.shooterMotor2.setPower(-currentPower);
                     marathonMap.kickerMotor.setPower(1);
@@ -104,14 +104,14 @@ public class TeleOpMAnew extends LinearOpMode {
             if (gamepad1.dpad_up) {
                 marathonMap.hood.setPosition((0.45));
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1250);
+                marathonMap.shooterMotor1.setVelocity(1450);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }
             else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition((0.45));
                 double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(900);
+                marathonMap.shooterMotor1.setVelocity(1100);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(-currentMotorPower);
             }
