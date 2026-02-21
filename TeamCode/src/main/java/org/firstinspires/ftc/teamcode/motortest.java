@@ -21,24 +21,15 @@ public class motortest extends LinearOpMode {
             if(gamepad1.a){
                 marathonMap.frontRightMotor.setPower(1);
 
-            }else{
-                marathonMap.frontRightMotor.setPower(0);
             }
             if(gamepad1.b){
                 marathonMap.frontLeftMotor.setPower(1);
-            }else{
-                marathonMap.frontLeftMotor.setPower(0);
             }
             if(gamepad1.y){
                 marathonMap.backRightMotor.setPower(1);
-            }else{
-                marathonMap.backRightMotor.setPower(0);
             }
             if(gamepad1.x){
                 marathonMap.backLeftMotor.setPower(1);
-            }else{
-                marathonMap.frontRightMotor.setPower(0);
-
             }
 
         }

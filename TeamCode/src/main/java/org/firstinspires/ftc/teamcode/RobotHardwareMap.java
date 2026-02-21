@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,8 +11,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class RobotHardwareMap {
-
-
     public Limelight3A limelight = null;
     public DcMotor intakeMotor = null;
     public DcMotor frontLeftMotor = null;
@@ -28,40 +24,6 @@ public class RobotHardwareMap {
     public Servo hood = null;
     public HardwareMap localHardwareMap = null;
     public RobotHardwareMap(){}
-
-
-    public String getButtonPressed(){
-        String buttonPressed = "None";
-        if (gamepad1.a) {
-            buttonPressed = "a";
-        } else if (gamepad1.b) {
-            buttonPressed = "b";
-        } else if (gamepad1.x) {
-            buttonPressed = "x";
-        } else if (gamepad1.y) {
-            buttonPressed = "y";
-        } else if (gamepad1.dpad_up) {
-            buttonPressed = "dpad_up";
-        } else if (gamepad1.dpad_down) {
-            buttonPressed = "dpad_down";
-        } else if (gamepad1.dpad_left) {
-            buttonPressed = "dpad_left";
-        } else if (gamepad1.dpad_right) {
-            buttonPressed = "dpad_right";
-        } else if (gamepad1.left_bumper) {
-            buttonPressed = "left_bumper";
-        } else if (gamepad1.right_bumper) {
-            buttonPressed = "right_bumper";
-        } else if (gamepad1.left_trigger > 0.1) {
-            buttonPressed = "left_trigger";
-        } else if (gamepad1.right_trigger > 0.1) {
-            buttonPressed = "right_trigger";
-        } else if (gamepad1.options) {
-            buttonPressed = "options";
-        }
-        return buttonPressed;
-    }
-    // MODIFICATION END
 
     public void init(HardwareMap maHardwareMap){
         //Saving Local Copy Of Hardware Map
@@ -112,9 +74,7 @@ public class RobotHardwareMap {
         shooterMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
-
     }
-
 
     public double getHeading(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
