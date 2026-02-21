@@ -80,4 +80,8 @@ public class RobotHardwareMap {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
 
+    public Limelight3A getLiemlight() {
+        return  limelight;
+    }
+
 }

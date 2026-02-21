@@ -3,22 +3,24 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.robot.Robot;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 public class LimelightSubSystem {
-    private RobotHardwareMap maRobotMap = new RobotHardwareMap();
     private Limelight3A limelight;
     private LLResult cachedResult;
 
-    public LimelightSubSystem(HardwareMap hardwareMap) {
-        maRobotMap.init(hardwareMap);
-        limelight = maRobotMap.limelight;
+    public LimelightSubSystem(RobotHardwareMap hardwareMap) {
+        limelight = hardwareMap.getLiemlight();
+        limelight.setPollRateHz(10);
     }
 
     //update method to make sure all data collected uniformly
     public void update() {
+
         cachedResult = limelight.getLatestResult();
+
     }
 
     public boolean hasValidResult() {
@@ -51,6 +53,8 @@ public class LimelightSubSystem {
 
         return new double[]{pose.getPosition().x, pose.getPosition().y};
     }
+
+
 
     //is robot withing shooting range
     public boolean isOkToShoot() {
