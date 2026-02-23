@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Autonomous
-public class AutonumosSmallTriangle extends LinearOpMode {
-    private static final Logger log = LoggerFactory.getLogger(AutonumosSmallTriangle.class);
+public class AutonomousSmallTriangle extends LinearOpMode {
+    private static final Logger log = LoggerFactory.getLogger(AutonomousSmallTriangle.class);
 
     @Override
     public void runOpMode() throws InterruptedException {
