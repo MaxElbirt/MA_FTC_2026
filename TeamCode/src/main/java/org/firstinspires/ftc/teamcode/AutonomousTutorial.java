@@ -18,37 +18,57 @@ public class AutonomousTutorial extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        while (opModeIsActive()) {
 
 //      go to this link and scroll down to see how the mecanum drive works: https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html
 
 
 //            how to write the autonomous:
 
-            long forward = 1200;
+        long backwards = 900;
+        short shoot = 3000;
+        short getreadyshoter = 3000;
+        short turnoff2 = 0;
+        short kicker = 600;
+        short wait = 2000;
 
-//            first make the motors move:
-//            the directions is your choice
-            marathonMap.frontLeftMotor.setPower(1);
-            marathonMap.backLeftMotor.setPower(1);
-            marathonMap.frontRightMotor.setPower(1);
-            marathonMap.backRightMotor.setPower(1);
-//            then make it do that actions for a certain time:
-            sleep(forward);
-//            then make it stop:
-            marathonMap.frontLeftMotor.setPower(0);
-            marathonMap.backLeftMotor.setPower(0);
-            marathonMap.frontRightMotor.setPower(0);
-            marathonMap.backRightMotor.setPower(0);
+        marathonMap.hood.setPosition(0.45);
+        marathonMap.frontLeftMotor.setPower(-0.6);
+        marathonMap.frontRightMotor.setPower(-0.6);
+        marathonMap.backLeftMotor.setPower(-0.5);
+        marathonMap.backRightMotor.setPower(-0.5);
+        sleep(backwards);
 
+        marathonMap.kickerMotor.setPower(0);
+        marathonMap.frontLeftMotor.setPower(0);
+        marathonMap.frontRightMotor.setPower(0);
+        marathonMap.backLeftMotor.setPower(0);
+        marathonMap.backRightMotor.setPower(0);
+        sleep(getreadyshoter);
 
+        marathonMap.shooterMotor1.setVelocity(1400);
+        marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
+        sleep(2000);
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(kicker);
 
+        marathonMap.kickerMotor.setPower(0);
+        sleep(wait);
+
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(kicker);
+
+        marathonMap.kickerMotor.setPower(0);
+        sleep(wait);
+
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(kicker);
+
+        marathonMap.kickerMotor.setPower(0);
+        marathonMap.shooterMotor1.setVelocity(0);
+        marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
+        marathonMap.kickerMotor.setPower(0);
 
 
 
         }
-
-
-
     }
-}
