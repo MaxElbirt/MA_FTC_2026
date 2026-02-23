@@ -61,6 +61,7 @@ public class RobotHardwareMap {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         kickerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         shooterMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooterMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         //Starting Power For All Motors
         frontLeftMotor.setPower(0);
@@ -69,6 +70,7 @@ public class RobotHardwareMap {
         backLeftMotor.setPower(0);
         kickerMotor.setPower(0);
         shooterMotor1.setPower(0);
+        shooterMotor2.setPower(0);
 
 
     }

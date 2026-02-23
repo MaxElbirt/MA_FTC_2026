@@ -24,7 +24,7 @@ public class AutonomousTutorial extends LinearOpMode {
 
 //            how to write the autonomous:
 
-        long backwards = 900;
+        long backwards = 800;
         short shoot = 3000;
         short getreadyshoter = 3000;
         short turnoff2 = 0;
@@ -47,7 +47,7 @@ public class AutonomousTutorial extends LinearOpMode {
 
         marathonMap.shooterMotor1.setVelocity(1400);
         marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
-        sleep(2000);
+        sleep(4000);
         marathonMap.kickerMotor.setPower(-0.6);
         sleep(kicker);
 
@@ -70,5 +70,12 @@ public class AutonomousTutorial extends LinearOpMode {
 
 
 
-        }
+
+
+
     }
+}
+
+
+
+
