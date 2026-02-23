@@ -14,6 +14,7 @@ public class LimelightSubSystem {
     public LimelightSubSystem(RobotHardwareMap hardwareMap) {
         limelight = hardwareMap.getLiemlight();
         limelight.setPollRateHz(10);
+        limelight.start();
     }
 
     //update method to make sure all data collected uniformly
@@ -41,7 +42,7 @@ public class LimelightSubSystem {
         if (!hasValidResult()) return 0;
 
         double tx = cachedResult.getTx();
-        return Constants.STEERING_KP * 0.002;
+        return Constants.STEERING_KP * tx;
     }
 
     //getting botpose
