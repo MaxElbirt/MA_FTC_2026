@@ -61,11 +61,5 @@ public class BackAndShoot extends LinearOpMode {
         marathonMap.shooterMotor1.setVelocity(0);
         marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
         marathonMap.kickerMotor.setPower(0);
-
-
-
-
-
-
     }
 }

@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +20,7 @@ public class AutonumosSmallTriangle extends LinearOpMode {
 
         if (isStopRequested()) return;
         short shoot = 3000;
-        short getreadyshoter = 3000;
+        short getreadyshooter = 3000;
 
         marathonMap.hood.setPosition(0.45);
         marathonMap.frontLeftMotor.setPower(1);
@@ -57,7 +54,7 @@ public class AutonumosSmallTriangle extends LinearOpMode {
         marathonMap.backRightMotor.setPower(0);
         marathonMap.frontRightMotor.setPower(0);
         marathonMap.frontLeftMotor.setPower(0);
-        sleep(getreadyshoter);
+        sleep(getreadyshooter);
 
         marathonMap.shooterMotor1.setVelocity(810);
         marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
@@ -82,11 +79,5 @@ public class AutonumosSmallTriangle extends LinearOpMode {
         marathonMap.shooterMotor1.setVelocity(0);
         marathonMap.shooterMotor2.setVelocity(0);
         sleep(500);
-
-
-
-
-
-
     }
 }
