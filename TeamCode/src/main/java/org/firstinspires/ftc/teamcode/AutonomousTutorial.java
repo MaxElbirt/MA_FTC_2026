@@ -23,16 +23,16 @@ public class AutonomousTutorial extends LinearOpMode {
 
 
 //            how to write the autonomous:
-        // V = 13.50 - 13.70- 13.30
+        // V = 14 - 14.20 - 13.80
         long backwards = 800;
         short shoot = 3000;
         short getreadyshoter = 3000;
         short turnoff2 = 0;
         short kicker = 600;
         short wait = 2000;
-        short moveright = 770;
-        short turnback = 775;
-        short moveback = 2000;
+        short moveright = 750;
+        short turnback = 745;
+        short moveback = 1000;
         short movefowrored = 300;
 
 
@@ -50,7 +50,7 @@ public class AutonomousTutorial extends LinearOpMode {
         marathonMap.backRightMotor.setPower(0);
         sleep(getreadyshoter);
 
-        marathonMap.shooterMotor1.setVelocity(1150);
+        marathonMap.shooterMotor1.setVelocity(1200);
         marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
         sleep(4000);
         marathonMap.kickerMotor.setPower(-0.6);
@@ -88,10 +88,10 @@ public class AutonomousTutorial extends LinearOpMode {
         marathonMap.backRightMotor.setPower(-0.7);
        sleep(turnback);
 
-        marathonMap.frontLeftMotor.setPower(-0.8);
-        marathonMap.backRightMotor.setPower(-0.8);
-        marathonMap.frontRightMotor.setPower(0.8);
-        marathonMap.backLeftMotor.setPower(0.8);
+        marathonMap.frontLeftMotor.setPower(-0.7);
+        marathonMap.backRightMotor.setPower(-0.7);
+        marathonMap.frontRightMotor.setPower(0.7);
+        marathonMap.backLeftMotor.setPower(0.7);
 
        sleep(moveright);
         marathonMap.frontLeftMotor.setPower(-0.4);
@@ -127,13 +127,13 @@ public class AutonomousTutorial extends LinearOpMode {
         marathonMap.frontRightMotor.setPower(-0.7);
         marathonMap.backLeftMotor.setPower(-0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(1700);
+        sleep(1500);
 
         marathonMap.frontLeftMotor.setPower(0.7);
         marathonMap.frontRightMotor.setPower(-0.7);
-        marathonMap.backLeftMotor.setPower(0.7);
-        marathonMap.backRightMotor.setPower(-0.7);
-        sleep(turnback);
+        marathonMap.backLeftMotor.setPower(-0.7);
+        marathonMap.backRightMotor.setPower(0.7);
+        sleep(200);
 
 
         marathonMap.shooterMotor1.setVelocity(1300);
