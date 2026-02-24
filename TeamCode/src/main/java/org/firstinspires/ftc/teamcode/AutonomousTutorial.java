@@ -127,17 +127,23 @@ public class AutonomousTutorial extends LinearOpMode {
         marathonMap.frontRightMotor.setPower(-0.7);
         marathonMap.backLeftMotor.setPower(-0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(1500);
+        sleep(1600);
 
-        marathonMap.frontLeftMotor.setPower(0.7);
-        marathonMap.frontRightMotor.setPower(-0.7);
+        marathonMap.frontLeftMotor.setPower(-0.7);
+        marathonMap.frontRightMotor.setPower(0.7);
         marathonMap.backLeftMotor.setPower(-0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(200);
+        sleep(600);
+
+        marathonMap.frontLeftMotor.setPower(0);
+        marathonMap.frontRightMotor.setPower(0);
+        marathonMap.backLeftMotor.setPower(0);
+        marathonMap.backRightMotor.setPower(0);
 
 
         marathonMap.shooterMotor1.setVelocity(1300);
         marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
+        sleep(1000);
         marathonMap.kickerMotor.setPower(-0.6);
         sleep(kicker);
 
