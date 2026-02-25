@@ -7,10 +7,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
 public class SixBallsAutoRed extends LinearOpMode {
+    RobotHardwareMap marathonMap = new RobotHardwareMap();
+
+    public void runShooterVelocity(double targetVelo) {
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
+        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
 
-        RobotHardwareMap marathonMap = new RobotHardwareMap();
+
         marathonMap.init(hardwareMap);
 
 
@@ -27,12 +34,12 @@ public class SixBallsAutoRed extends LinearOpMode {
         // V = 14 - 14.20 - 13.80
         long backwards = 800;
         short shoot = 3000;
-        short getreadyshoter = 3000;
+        short getreadyshoter = 1500;
         short turnoff2 = 0;
         short kicker = 600;
-        short wait = 2000;
+        short wait = 1000;
         short moveright = 770;
-        short turnback = 745;
+        short turnback = 740;
         short moveback = 1000;
         short movefowrored = 300;
         short getreadyshoter2 = 5000;
@@ -51,8 +58,8 @@ public class SixBallsAutoRed extends LinearOpMode {
         marathonMap.backRightMotor.setPower(0);
         sleep(getreadyshoter);
 
-        marathonMap.shooterMotor1.setVelocity(300);
-        marathonMap.shooterMotor2.setPower(-marathonMap.shooterMotor1.getPower());
+
+        marathonMap.shooterMotor1.setPower(0.7);
         sleep(4000);
 
         marathonMap.kickerMotor.setPower(-0.6);
@@ -71,8 +78,7 @@ public class SixBallsAutoRed extends LinearOpMode {
         sleep(kicker);
 
         marathonMap.kickerMotor.setPower(0);
-        marathonMap.shooterMotor1.setVelocity(0);
-        marathonMap.shooterMotor2.setPower(-marathonMap.shooterMotor1.getPower());
+        marathonMap.shooterMotor1.setPower(0);
         marathonMap.kickerMotor.setPower(0);
 
 
@@ -123,19 +129,19 @@ public class SixBallsAutoRed extends LinearOpMode {
         marathonMap.frontRightMotor.setPower(0.7);
         marathonMap.backLeftMotor.setPower(0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(700);
+        sleep(650);
 
         marathonMap.frontLeftMotor.setPower(0.7);
         marathonMap.frontRightMotor.setPower(-0.7);
         marathonMap.backLeftMotor.setPower(-0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(1600);
+        sleep(1550);
 
         marathonMap.frontLeftMotor.setPower(-0.7);
         marathonMap.frontRightMotor.setPower(0.7);
         marathonMap.backLeftMotor.setPower(-0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(600);
+        sleep(650);
 
         marathonMap.frontLeftMotor.setPower(0);
         marathonMap.frontRightMotor.setPower(0);
@@ -145,8 +151,7 @@ public class SixBallsAutoRed extends LinearOpMode {
 
         sleep(getreadyshoter);
 
-        marathonMap.shooterMotor1.setVelocity(500);
-        marathonMap.shooterMotor2.setPower(-marathonMap.shooterMotor1.getPower());
+      marathonMap.shooterMotor1.setPower(0.7);
         sleep(4000);
 
         marathonMap.kickerMotor.setPower(-0.6);
@@ -171,19 +176,22 @@ public class SixBallsAutoRed extends LinearOpMode {
 sleep(1200);
 
 
-        marathonMap.kickerMotor.setPower(0);
-        marathonMap.shooterMotor1.setVelocity(0);
-        marathonMap.shooterMotor2.setPower(-marathonMap.shooterMotor1.getPower());
-        marathonMap.kickerMotor.setPower(0);
 
 
+
+        marathonMap.kickerMotor.setPower(0);
+        marathonMap.shooterMotor1.setPower(0);
+        marathonMap.kickerMotor.setPower(0);
+
+        marathonMap.frontLeftMotor.setPower(0);
+        marathonMap.frontRightMotor.setPower(0);
+        marathonMap.backLeftMotor.setPower(0);
+        marathonMap.backRightMotor.setPower(0);
 //  st
 
 
         // stop shoter
 
-        marathonMap.shooterMotor1.setVelocity(0);
-        marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
 
     }
 }

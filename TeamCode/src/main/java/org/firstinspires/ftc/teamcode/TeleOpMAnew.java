@@ -12,7 +12,6 @@ public class TeleOpMAnew extends LinearOpMode {
     public void runShooterVelocity(double targetVelo) {
         marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
         telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
-
     }
     @Override
     public void runOpMode() throws InterruptedException {
