@@ -123,7 +123,7 @@ public class SixBallsAutoRed extends LinearOpMode {
         marathonMap.frontRightMotor.setPower(0.7);
         marathonMap.backLeftMotor.setPower(0.7);
         marathonMap.backRightMotor.setPower(0.7);
-        sleep(800);
+        sleep(700);
 
         marathonMap.frontLeftMotor.setPower(0.7);
         marathonMap.frontRightMotor.setPower(-0.7);
@@ -163,6 +163,13 @@ public class SixBallsAutoRed extends LinearOpMode {
 
         marathonMap.kickerMotor.setPower(-0.6);
         sleep(kicker);
+
+        marathonMap.frontLeftMotor.setPower(0.6);
+        marathonMap.frontRightMotor.setPower(-0.6);
+        marathonMap.backLeftMotor.setPower(-0.6);
+        marathonMap.backRightMotor.setPower(0.6);
+sleep(1200);
+
 
         marathonMap.kickerMotor.setPower(0);
         marathonMap.shooterMotor1.setVelocity(0);
