@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -12,8 +14,15 @@ public class HelperFuncs {
 
     }
 
+    public void runShooterVelocity(double targetVelo) {
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
+        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+
+    }
+
     public void init(HardwareMap hardwareMap) {
         marathonMap.init(hardwareMap);
+
     }
 
     public void setShooterVelocities(double velocity) {

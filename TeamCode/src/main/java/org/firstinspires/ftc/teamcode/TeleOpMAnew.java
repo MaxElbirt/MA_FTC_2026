@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class TeleOpMAnew extends LinearOpMode {
     RobotHardwareMap marathonMap = new RobotHardwareMap();
 
-    public void runShooterVelociy(double targetVelo) {
+    public void runShooterVelocity(double targetVelo) {
         marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
         telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
 
@@ -147,7 +147,7 @@ public class TeleOpMAnew extends LinearOpMode {
             if (gamepad1.share){
                 marathonMap.imu.resetYaw();
             }
-            runShooterVelociy(shooterVelocuty);
+            runShooterVelocity(shooterVelocuty);
             double hoodposition = marathonMap.hood.getPosition();
             telemetry.addData("hood pos: ", hoodposition);
             telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
