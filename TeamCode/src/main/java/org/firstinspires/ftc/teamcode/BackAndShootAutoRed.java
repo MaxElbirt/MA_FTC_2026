@@ -15,7 +15,7 @@ public class BackAndShootAutoRed extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-
+        //this autonomous goes backwards, shoots, and leaves the big shooting zone.
 
 //      go to this link and scroll down to see how the mecanum drive works: https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html
 

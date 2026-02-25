@@ -20,6 +20,11 @@ public class AutonumosSmallTriangleRed extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
+        // goes forward from the small shooting zone, turns, and shoots 3 balls
+
+
+
+
         long getReadyShoter = 2000;
         short kicker = 3000;
         short shoot = 600;
