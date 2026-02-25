@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Autonomous
-public class AutonumosSmallTriangleBlue extends LinearOpMode {
+public class AutonumosSmallTriangleRed extends LinearOpMode {
     private static final Logger log = LoggerFactory.getLogger(AutonumosSmallTriangleBlue.class);
 
     @Override
@@ -42,10 +42,10 @@ public class AutonumosSmallTriangleBlue extends LinearOpMode {
         marathonMap.backLeftMotor.setPower(0);
         marathonMap.backRightMotor.setPower(0);
 
-        marathonMap.frontLeftMotor.setPower(-1);
-        marathonMap.backLeftMotor.setPower(-1);
-        marathonMap.frontRightMotor.setPower(1);
-        marathonMap.backRightMotor.setPower(1);
+        marathonMap.frontLeftMotor.setPower(1);
+        marathonMap.backLeftMotor.setPower(1);
+        marathonMap.frontRightMotor.setPower(-1);
+        marathonMap.backRightMotor.setPower(-1);
         sleep(turn);
 
         marathonMap.frontLeftMotor.setPower(0);
@@ -64,8 +64,6 @@ public class AutonumosSmallTriangleBlue extends LinearOpMode {
         marathonMap.backRightMotor.setPower(0);
         marathonMap.frontRightMotor.setPower(0);
         marathonMap.frontLeftMotor.setPower(0);
-
-
         helper.setShooterVelocities(1100);
         sleep(3000);
 

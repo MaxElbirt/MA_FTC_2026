@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous
-public class BackAndShootBlue extends LinearOpMode {
+public class BackAndShootAutoBlue extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
