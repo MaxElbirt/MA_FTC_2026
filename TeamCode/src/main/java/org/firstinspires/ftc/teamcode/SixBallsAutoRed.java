@@ -27,6 +27,9 @@ public class SixBallsAutoRed extends LinearOpMode {
         if (isStopRequested()) return;
 
 
+        // goes back, shoots 3 balls, collects 3 more, and shoots them again, totalling 6 balls.
+
+
 //      go to this link and scroll down to see how the mecanum drive works: https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html
 
 

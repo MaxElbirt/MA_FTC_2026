@@ -19,6 +19,9 @@ public class leaveShootingZoneRed extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
+        // leaves the big shooting zone.
+
+
 
 
         long backwards1 = 600;
