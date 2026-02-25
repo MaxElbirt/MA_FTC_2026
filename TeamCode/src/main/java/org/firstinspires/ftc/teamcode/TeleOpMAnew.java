@@ -7,10 +7,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
 public class TeleOpMAnew extends LinearOpMode {
+    RobotHardwareMap marathonMap = new RobotHardwareMap();
+
+    public void runShooterVelociy(double targetVelo) {
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
+        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+
+    }
     @Override
     public void runOpMode() throws InterruptedException {
+        double shooterVelocuty = 0;
 
-        RobotHardwareMap marathonMap = new RobotHardwareMap();
+
         marathonMap.init(hardwareMap);
         LimelightSubSystem limelight = new LimelightSubSystem(marathonMap);
         HelperFuncs helper = new HelperFuncs();
@@ -77,32 +85,23 @@ public class TeleOpMAnew extends LinearOpMode {
             }
 
             //REV SHOOTER UP WHEN IN RANGE
-//            if(limelight.hasValidResult() && limelight.isOkToShoot()){
-//                double currentMotorPower = 0;
-//                marathonMap.shooterMotor1.setVelocity(1450);
-//                currentMotorPower = marathonMap.shooterMotor1.getPower();
-//                marathonMap.shooterMotor2.setPower(currentMotorPower);
-//            }
-
-            //REV SHOOTER UP
-            if(gamepad1.right_bumper){
+            if(limelight.hasValidResult() && limelight.isOkToShoot()){
                 double currentMotorPower = 0;
                 marathonMap.shooterMotor1.setVelocity(1450);
                 currentMotorPower = marathonMap.shooterMotor1.getPower();
                 marathonMap.shooterMotor2.setPower(currentMotorPower);
             }
 
-//            else if(gamepad1.b && limelight.hasValidResult()){
-//                rx = limelight.getSteeringToTarget();
-//                rx = Math.max(-Constants.MAX_STEERING_POWER,Math.min(Constants.MAX_STEERING_POWER,rx));
-//            }
+            //REV SHOOTER UP
+            if(gamepad1.right_bumper){
+                shooterVelocuty= 1450;
+            }
+
+
 
             //STOP SHOOTER
             else if(gamepad1.x){
-                double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(0);
-                currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(currentMotorPower);
+                shooterVelocuty = 0;
                 marathonMap.hood.setPosition(0.0);
             }
 
@@ -111,9 +110,7 @@ public class TeleOpMAnew extends LinearOpMode {
             //CLEAR MECHANISM
             else if(gamepad1.a) {
                 marathonMap.hood.setPosition(0.45);
-                marathonMap.shooterMotor1.setVelocity(-1450);
-                double currentPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(currentPower * -1);
+                shooterVelocuty = -1450;
                 marathonMap.kickerMotor.setPower(1);
                 marathonMap.intakeMotor.setPower(1);
             }
@@ -134,33 +131,23 @@ public class TeleOpMAnew extends LinearOpMode {
 
             if (gamepad1.dpad_up) {
                 marathonMap.hood.setPosition((0.45));
-                double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1450);
-                currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+                shooterVelocuty = 1350;
             }
             else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition((0.45));
-                double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1100);
-                currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+                shooterVelocuty = 1200;
             }
             else if(gamepad1.b){
                 marathonMap.hood.setPosition((0.45));
-                double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(2500);
-                currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(-currentMotorPower);
+                shooterVelocuty = 1800;
             }
 
-//            marathonMap.hood.setPosition(0);
 
             //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
             if (gamepad1.share){
                 marathonMap.imu.resetYaw();
             }
-
+            runShooterVelociy(shooterVelocuty);
             double hoodposition = marathonMap.hood.getPosition();
             telemetry.addData("hood pos: ", hoodposition);
             telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());

@@ -72,6 +72,7 @@ public class RobotHardwareMap {
         shooterMotor1.setPower(0);
         shooterMotor2.setPower(0);
         shooterMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooterMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
