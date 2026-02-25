@@ -2,11 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
-public class SixBallsAuto extends LinearOpMode {
+public class SixBallsAutoRed extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 

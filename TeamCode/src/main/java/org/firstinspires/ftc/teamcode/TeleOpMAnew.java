@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
@@ -124,7 +125,7 @@ public class TeleOpMAnew extends LinearOpMode {
             double hoodposition = marathonMap.hood.getPosition();
             telemetry.addData("hood pos: ", hoodposition);
             telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
-            telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
+            telemetry.addData("shooter2 velo: ", marathonMap.shooterMotor2.getVelocity());
             telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
             telemetry.update();
 
