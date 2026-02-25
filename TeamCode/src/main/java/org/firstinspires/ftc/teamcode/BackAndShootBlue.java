@@ -4,12 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous
-public class BackAndShootAuto extends LinearOpMode {
+public class BackAndShootBlue extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
+        HelperFuncs helper = new HelperFuncs();
+        helper.init(hardwareMap);
         waitForStart();
 
         if (isStopRequested()) return;
@@ -24,6 +26,7 @@ public class BackAndShootAuto extends LinearOpMode {
         short getreadyshooter = 3000;
         short kicker = 600;
         short wait = 2000;
+        short moveleft = 1000;
 
         marathonMap.hood.setPosition(0.45);
         marathonMap.frontLeftMotor.setPower(-0.6);
@@ -39,8 +42,7 @@ public class BackAndShootAuto extends LinearOpMode {
         marathonMap.backRightMotor.setPower(0);
         sleep(getreadyshooter);
 
-        marathonMap.shooterMotor1.setVelocity(1400);
-        marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
+        helper.setShooterVelocities(0.7);
         sleep(4000);
         marathonMap.kickerMotor.setPower(-0.6);
         sleep(kicker);
@@ -58,8 +60,30 @@ public class BackAndShootAuto extends LinearOpMode {
         sleep(kicker);
 
         marathonMap.kickerMotor.setPower(0);
-        marathonMap.shooterMotor1.setVelocity(0);
-        marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
-        marathonMap.kickerMotor.setPower(0);
+
+
+
+        helper.runShooterVelocity(0);
+
+
+        marathonMap.frontLeftMotor.setPower(-0.6);
+        marathonMap.frontRightMotor.setPower(0.6);
+        marathonMap.backLeftMotor.setPower(0.6);
+        marathonMap.backRightMotor.setPower(-0.6);
+
+        sleep(moveleft);
+        marathonMap.frontLeftMotor.setPower(0);
+        marathonMap.frontRightMotor.setPower(0);
+        marathonMap.backLeftMotor.setPower(0);
+        marathonMap.backRightMotor.setPower(0);
+
+
+
+
+
+
+
+
+
     }
 }
