@@ -42,7 +42,7 @@ public class BackAndShootAutoRed extends LinearOpMode {
         marathonMap.backRightMotor.setPower(0);
         sleep(getreadyshooter);
 
-        helper.setShooterVelocities(0.7);
+        helper.setShooterVelocities(1200);
         marathonMap.shooterMotor2.setPower(marathonMap.shooterMotor1.getPower());
         sleep(4000);
         marathonMap.kickerMotor.setPower(-0.6);
