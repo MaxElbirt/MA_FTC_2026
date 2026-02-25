@@ -40,7 +40,7 @@ public class SixBallsAutoRed extends LinearOpMode {
         short getreadyshoter = 1500;
         short turnoff2 = 0;
         short kicker = 600;
-        short wait = 1000;
+        short wait = 800;
         short moveright = 770;
         short turnback = 740;
         short moveback = 1000;
@@ -155,7 +155,7 @@ public class SixBallsAutoRed extends LinearOpMode {
         sleep(getreadyshoter);
 
       marathonMap.shooterMotor1.setPower(0.7);
-        sleep(4000);
+        sleep(4500);
 
         marathonMap.kickerMotor.setPower(-0.6);
         sleep(kicker);
