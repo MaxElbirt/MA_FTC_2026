@@ -22,7 +22,7 @@ public class AutoOnTicks extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-
+marathonMap.init(hardwareMap);
         // Hardware mapping
         frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
         frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
@@ -32,8 +32,8 @@ public class AutoOnTicks extends LinearOpMode {
 
 
         // Reverse right side (typical drivetrain)
-        frontRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+//        frontRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+//        backRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         // Brake so robot stops cleanly
         frontLeftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -48,7 +48,7 @@ public class AutoOnTicks extends LinearOpMode {
 
         waitForStart();
 
-        moveTicks(1000, 0.5);
+        moveTicks(-1000, 0.5);
 
         shoter();
 
@@ -110,14 +110,14 @@ public class AutoOnTicks extends LinearOpMode {
     public void shoter(){
 
         marathonMap.shooterMotor1.setVelocity(1300);
-        sleep(1000);
+        sleep(2000);
 
 marathonMap.kickerMotor.setPower(0);
-sleep(400);
-
-
-marathonMap.kickerMotor.setPower(1);
 sleep(600);
+
+
+marathonMap.kickerMotor.setPower(-1);
+sleep(1400);
 
 
 
