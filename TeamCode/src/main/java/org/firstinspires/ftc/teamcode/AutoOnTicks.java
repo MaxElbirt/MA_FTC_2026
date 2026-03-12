@@ -13,6 +13,7 @@ public class AutoOnTicks extends LinearOpMode {
     DcMotorEx backRightMotor;
     RobotHardwareMap marathonMap = new RobotHardwareMap();
 
+
     public void runShooterVelocity(double targetVelo) {
         marathonMap.shooterMotor1.setPower((targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
         telemetry.addData("Target Power", (targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
@@ -27,6 +28,8 @@ public class AutoOnTicks extends LinearOpMode {
         frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
         backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
         backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
+
+
 
         // Reverse right side (typical drivetrain)
         frontRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
@@ -46,6 +49,10 @@ public class AutoOnTicks extends LinearOpMode {
         waitForStart();
 
         moveTicks(1000, 0.5);
+
+        shoter();
+
+
     }
 
     public void resetEncoders() {
@@ -105,24 +112,19 @@ public class AutoOnTicks extends LinearOpMode {
         marathonMap.shooterMotor1.setVelocity(1300);
         sleep(1000);
 
-
-        marathonMap.kickerMotor.setPower(0);
-        sleep(400);
-
-        marathonMap.kickerMotor.setPower(0.7);
-        sleep(600);
+marathonMap.kickerMotor.setPower(0);
+sleep(400);
 
 
+marathonMap.kickerMotor.setPower(1);
+sleep(600);
 
 
-        marathonMap.kickerMotor.setPower(0);
-        sleep(400);
-        marathonMap.shooterMotor1.setVelocity(1300);
-        sleep(1000);
-
-    }
 
 
+    marathonMap.shooterMotor1.setVelocity(0);
+
+}
 
     }
 
