@@ -11,7 +11,12 @@ public class AutoOnTicks extends LinearOpMode {
     DcMotorEx frontRightMotor;
     DcMotorEx backLeftMotor;
     DcMotorEx backRightMotor;
+    RobotHardwareMap marathonMap = new RobotHardwareMap();
 
+    public void runShooterVelocity(double targetVelo) {
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
+        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+    }
     @Override
     public void runOpMode() {
 
