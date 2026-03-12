@@ -1,83 +1,110 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous
 public class AutoOnTicks extends LinearOpMode {
 
-    RobotHardwareMap marathonMap = new RobotHardwareMap();
+    DcMotorEx frontLeftMotor;
+    DcMotorEx frontRightMotor;
+    DcMotorEx backLeftMotor;
+    DcMotorEx backRightMotor;
 
     @Override
-    public void runOpMode() throws InterruptedException {
-
-        marathonMap.init(hardwareMap);
-        marathonMap.frontLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        marathonMap.frontRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        marathonMap.backLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        marathonMap.backRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    public void runOpMode() {
 
 
-        marathonMap.frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        marathonMap.frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        marathonMap.backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        marathonMap.backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        // Hardware mapping
+        frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
+        frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
+        backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
+        backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
+
+        // Reverse right side (typical drivetrain)
+        frontRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+
+        // Brake so robot stops cleanly
+        frontLeftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+        resetEncoders();
+
+        telemetry.addLine("Ready");
+        telemetry.update();
+
         waitForStart();
 
-        if (isStopRequested()) return;
-
-        // דוגמא לשימוש בפונקציה
-        driveForwardTicks(2000, 0.5);
+        moveTicks(1000, 0.5);
     }
 
-    // פונקציה לשיוט
-    public void runShooterVelocity(double targetVelo) {
-        marathonMap.shooterMotor1.setPower(
-                (targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01)
-        );
-        telemetry.addData("Target Power",
-                (targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001)
-        );
+    public void resetEncoders(){
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 
-    // פונקציה לנסיעה לפי ticks
-    public void driveForwardTicks(int ticks, double power) {
+    public void moveTicks(int ticks, double power){
 
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() + ticks;
 
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
 
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(power);
 
+        // Debug loop showing encoder ticks
+        while(opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
 
-
-
-
-//        marathonMap.frontLeftMotor.setPower(power);
-//        marathonMap.frontRightMotor.setPower(power);
-//        marathonMap.backLeftMotor.setPower(power);
-//        marathonMap.backRightMotor.setPower(power);
-
-        while (opModeIsActive() &&
-                (marathonMap.frontLeftMotor.isBusy() ||
-                        marathonMap.frontRightMotor.isBusy() ||
-                        marathonMap.backLeftMotor.isBusy() ||
-                        marathonMap.backRightMotor.isBusy())) {
-
-            marathonMap.frontLeftMotor.setTargetPosition(ticks);
-            marathonMap.frontRightMotor.setTargetPosition(ticks);
-            marathonMap.backLeftMotor.setTargetPosition(ticks);
-            marathonMap.backRightMotor.setTargetPosition(ticks);
-
-
-            telemetry.addData("FL ticks", marathonMap.frontLeftMotor.getCurrentPosition());
-            telemetry.addData("FR ticks", marathonMap.frontRightMotor.getCurrentPosition());
-            telemetry.addData("BL ticks", marathonMap.backLeftMotor.getCurrentPosition());
-            telemetry.addData("BR ticks", marathonMap.backRightMotor.getCurrentPosition());
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
             telemetry.update();
         }
+
 
 
     }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
