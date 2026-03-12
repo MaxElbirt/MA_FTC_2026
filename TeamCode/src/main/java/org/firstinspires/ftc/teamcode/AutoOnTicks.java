@@ -14,9 +14,10 @@ public class AutoOnTicks extends LinearOpMode {
     RobotHardwareMap marathonMap = new RobotHardwareMap();
 
     public void runShooterVelocity(double targetVelo) {
-        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
-        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
+        telemetry.addData("Target Power", (targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
     }
+
     @Override
     public void runOpMode() {
 
@@ -47,7 +48,7 @@ public class AutoOnTicks extends LinearOpMode {
         moveTicks(1000, 0.5);
     }
 
-    public void resetEncoders(){
+    public void resetEncoders() {
 
         frontLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -60,7 +61,7 @@ public class AutoOnTicks extends LinearOpMode {
         backRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 
-    public void moveTicks(int ticks, double power){
+    public void moveTicks(int ticks, double power) {
 
         int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
         int frTarget = frontRightMotor.getCurrentPosition() + ticks;
@@ -83,7 +84,7 @@ public class AutoOnTicks extends LinearOpMode {
         backRightMotor.setPower(power);
 
         // Debug loop showing encoder ticks
-        while(opModeIsActive() &&
+        while (opModeIsActive() &&
                 (frontLeftMotor.isBusy() ||
                         frontRightMotor.isBusy() ||
                         backLeftMotor.isBusy() ||
@@ -94,14 +95,41 @@ public class AutoOnTicks extends LinearOpMode {
             telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
             telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
             telemetry.update();
+
+
         }
+    }
+
+    public void shoter(){
+
+        marathonMap.shooterMotor1.setVelocity(1300);
+        sleep(1000);
+
+
+        marathonMap.kickerMotor.setPower(0);
+        sleep(400);
+
+        marathonMap.kickerMotor.setPower(0.7);
+        sleep(600);
+
+
+
+
+        marathonMap.kickerMotor.setPower(0);
+        sleep(400);
+        marathonMap.shooterMotor1.setVelocity(1300);
+        sleep(1000);
+
+    }
 
 
 
     }
 
 
-}
+
+
+
 
 
 
