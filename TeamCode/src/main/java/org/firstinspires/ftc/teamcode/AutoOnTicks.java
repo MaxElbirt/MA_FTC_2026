@@ -121,22 +121,22 @@ public class AutoOnTicks extends LinearOpMode {
     public void shoter() {
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1250);
+        marathonMap.shooterMotor1.setVelocity(1300);;
         sleep(5000);
 
         marathonMap.kickerMotor.setPower(0);
         sleep(300);
 
 
-        marathonMap.kickerMotor.setPower(-0.75);
+        marathonMap.kickerMotor.setPower(-0.6);
         sleep(500);
 
         marathonMap.kickerMotor.setPower(0);
         sleep(1000);
 
 
-        marathonMap.kickerMotor.setPower(-0.75);
-        sleep(300);
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(600);
 
         marathonMap.kickerMotor.setPower(0);
         sleep(1000);
@@ -247,7 +247,6 @@ public class AutoOnTicks extends LinearOpMode {
 
 
 
-
                 int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
                 int frTarget = frontRightMotor.getCurrentPosition() + ticks;
                 int blTarget = backLeftMotor.getCurrentPosition() + ticks;
@@ -269,18 +268,18 @@ public class AutoOnTicks extends LinearOpMode {
                 backRightMotor.setPower(power);
 
 
-                marathonMap.kickerMotor.setPower(-0.5);
-                sleep(400);
+                marathonMap.kickerMotor.setPower(-0.55);
+                sleep(500);
                 marathonMap.kickerMotor.setPower(0);
                 sleep(300);
 
-                marathonMap.kickerMotor.setPower(-0.5);
-                sleep(400);
+                marathonMap.kickerMotor.setPower(-0.55);
+                sleep(500);
                 marathonMap.kickerMotor.setPower(0);
                 sleep(300);
 
-                marathonMap.kickerMotor.setPower(-0.5);
-                sleep(400);
+                marathonMap.kickerMotor.setPower(-0.55 );
+                sleep(500);
                 marathonMap.kickerMotor.setPower(0);
                 sleep(300);
 
@@ -300,7 +299,6 @@ public class AutoOnTicks extends LinearOpMode {
                     telemetry.update();
 
 
-                    marathonMap.kickerMotor.setPower(0);
                 }
     }
 }
