@@ -11,9 +11,15 @@ public class AutonomusByTicksPractice extends LinearOpMode {
     DcMotorEx frontRightMotor;
     DcMotorEx backLeftMotor;
     DcMotorEx backRightMotor;
+    RobotHardwareMap marathonMap = new RobotHardwareMap();
 
+    public void runShooterVelocity(double targetVelo) {
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
+        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+    }
     @Override
     public void runOpMode() {
+
 
         // Hardware mapping
         frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
@@ -38,7 +44,8 @@ public class AutonomusByTicksPractice extends LinearOpMode {
 
         waitForStart();
 
-        moveTicks(1000, 0.5);
+        moveTicks(5000, 0.5);
+        turnTicks(1000, 0.5);
     }
 
     public void resetEncoders(){
@@ -71,9 +78,9 @@ public class AutonomusByTicksPractice extends LinearOpMode {
         backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
-//        frontLeftMotor.setPower(power);
+        frontLeftMotor.setPower(power);
         frontRightMotor.setPower(power);
-//        backLeftMotor.setPower(power);
+        backLeftMotor.setPower(power);
         backRightMotor.setPower(power);
 
         // Debug loop showing encoder ticks
@@ -94,5 +101,39 @@ public class AutonomusByTicksPractice extends LinearOpMode {
 
     }
 
+    public void turnTicks(int ticks, double power) {
 
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() - ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() - ticks;
+
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(-power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(-power);
     }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
