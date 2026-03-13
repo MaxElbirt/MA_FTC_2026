@@ -11,6 +11,8 @@ public class AutoOnTicks extends LinearOpMode {
     DcMotorEx frontRightMotor;
     DcMotorEx backLeftMotor;
     DcMotorEx backRightMotor;
+
+
     RobotHardwareMap marathonMap = new RobotHardwareMap();
 
 
@@ -22,13 +24,15 @@ public class AutoOnTicks extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-marathonMap.init(hardwareMap);
+
+        marathonMap.init(hardwareMap);
         // Hardware mapping
+
+        marathonMap.hood.setPosition(0);
         frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
         frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
         backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
         backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
-
 
 
         // Reverse right side (typical drivetrain)
@@ -42,6 +46,8 @@ marathonMap.init(hardwareMap);
         backRightMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         resetEncoders();
+        runUsingIncoder();
+
 
         telemetry.addLine("Ready");
         telemetry.update();
@@ -52,7 +58,11 @@ marathonMap.init(hardwareMap);
 
         shoter();
 
+        turnTicks(1460, 0.3);
 
+        moveright(830, 0.3);
+
+        moveBack(-1000, 0.5);
     }
 
     public void resetEncoders() {
@@ -97,6 +107,7 @@ marathonMap.init(hardwareMap);
                         backLeftMotor.isBusy() ||
                         backRightMotor.isBusy())) {
 
+
             telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
             telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
             telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
@@ -107,26 +118,195 @@ marathonMap.init(hardwareMap);
         }
     }
 
-    public void shoter(){
+    public void shoter() {
+        marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1300);
-        sleep(2000);
+        marathonMap.shooterMotor1.setVelocity(1250);
+        sleep(5000);
 
-marathonMap.kickerMotor.setPower(0);
-sleep(600);
-
-
-marathonMap.kickerMotor.setPower(-1);
-sleep(1400);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(300);
 
 
+        marathonMap.kickerMotor.setPower(-0.75);
+        sleep(500);
+
+        marathonMap.kickerMotor.setPower(0);
+        sleep(1000);
 
 
-    marathonMap.shooterMotor1.setVelocity(0);
+        marathonMap.kickerMotor.setPower(-0.75);
+        sleep(300);
 
-}
+        marathonMap.kickerMotor.setPower(0);
+        sleep(1000);
+
+
+        marathonMap.kickerMotor.setPower(-1);
+        sleep(600);
+
+
+        marathonMap.shooterMotor1.setVelocity(0);
+        marathonMap.kickerMotor.setPower(0);
+
 
     }
+
+    public void runUsingIncoder() {
+
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void turnTicks(int ticks, double power) {
+
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() - ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() - ticks;
+
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(-power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(-power);
+
+        // Debug loop showing encoder ticks
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
+
+
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
+
+
+        }
+    }
+
+    public void moveright(int ticks, double power) {
+
+        int flTarget = frontLeftMotor.getCurrentPosition() - ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() - ticks;
+
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setPower(-power);
+        frontRightMotor.setPower(power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(-power);
+
+        // Debug loop showing encoder ticks
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
+
+
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
+
+
+        }
+
+            }
+            public void moveBack(int ticks, double power) {
+
+              marathonMap.intakeMotor.setPower(-0.7);
+
+
+
+
+                int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+                int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+                int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+                int brTarget = backRightMotor.getCurrentPosition() + ticks;
+
+                frontLeftMotor.setTargetPosition(flTarget);
+                frontRightMotor.setTargetPosition(frTarget);
+                backLeftMotor.setTargetPosition(blTarget);
+                backRightMotor.setTargetPosition(brTarget);
+
+                frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+                frontLeftMotor.setPower(power);
+                frontRightMotor.setPower(power);
+                backLeftMotor.setPower(power);
+                backRightMotor.setPower(power);
+
+
+                marathonMap.kickerMotor.setPower(-0.5);
+                sleep(400);
+                marathonMap.kickerMotor.setPower(0);
+                sleep(300);
+
+                marathonMap.kickerMotor.setPower(-0.5);
+                sleep(400);
+                marathonMap.kickerMotor.setPower(0);
+                sleep(300);
+
+                marathonMap.kickerMotor.setPower(-0.5);
+                sleep(400);
+                marathonMap.kickerMotor.setPower(0);
+                sleep(300);
+
+
+                // Debug loop showing encoder ticks
+                while (opModeIsActive() &&
+                        (frontLeftMotor.isBusy() ||
+                                frontRightMotor.isBusy() ||
+                                backLeftMotor.isBusy() ||
+                                backRightMotor.isBusy())) {
+
+
+                    telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+                    telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+                    telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+                    telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+                    telemetry.update();
+
+
+                    marathonMap.kickerMotor.setPower(0);
+                }
+    }
+}
+
+
+
 
 
 
