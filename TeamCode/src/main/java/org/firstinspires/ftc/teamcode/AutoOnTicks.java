@@ -63,6 +63,10 @@ public class AutoOnTicks extends LinearOpMode {
         moveright(830, 0.3);
 
         moveBack(-1000, 0.5);
+
+        movefowroed(   1000, 0.5);
+
+       turnforshoot3balls(800, 0.5);
     }
 
     public void resetEncoders() {
@@ -121,21 +125,21 @@ public class AutoOnTicks extends LinearOpMode {
     public void shoter() {
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1300);;
+        marathonMap.shooterMotor1.setVelocity(1500);
         sleep(5000);
 
         marathonMap.kickerMotor.setPower(0);
         sleep(300);
 
 
-        marathonMap.kickerMotor.setPower(-0.6);
+        marathonMap.kickerMotor.setPower(-0.65);
         sleep(500);
 
         marathonMap.kickerMotor.setPower(0);
         sleep(1500);
 
 
-        marathonMap.kickerMotor.setPower(-0.6);
+        marathonMap.kickerMotor.setPower(-0.65);
         sleep(600);
 
         marathonMap.kickerMotor.setPower(0);
@@ -240,69 +244,145 @@ public class AutoOnTicks extends LinearOpMode {
 
         }
 
+    }
+
+    public void moveBack(int ticks, double power) {
+
+        marathonMap.intakeMotor.setPower(-0.7);
+
+
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() + ticks;
+
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(power);
+
+
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(400);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(300);
+
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(400);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(300);
+
+        marathonMap.kickerMotor.setPower(-0.6);
+        sleep(400);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(300);
+
+
+        // Debug loop showing encoder ticks
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
+
+
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
+
+
+        }
+
+
+    }
+
+    public void movefowroed(int ticks, double power) {
+
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() + ticks;
+
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(power);
+
+
+
+
+            while (opModeIsActive() &&
+                    (frontLeftMotor.isBusy() ||
+                            frontRightMotor.isBusy() ||
+                            backLeftMotor.isBusy() ||
+                            backRightMotor.isBusy())) {
+
             }
-            public void moveBack(int ticks, double power) {
-
-              marathonMap.intakeMotor.setPower(-0.7);
 
 
+    }
+    public void turnforshoot3balls(int ticks, double power) {
 
-                int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
-                int frTarget = frontRightMotor.getCurrentPosition() + ticks;
-                int blTarget = backLeftMotor.getCurrentPosition() + ticks;
-                int brTarget = backRightMotor.getCurrentPosition() + ticks;
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() - ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() - ticks;
 
-                frontLeftMotor.setTargetPosition(flTarget);
-                frontRightMotor.setTargetPosition(frTarget);
-                backLeftMotor.setTargetPosition(blTarget);
-                backRightMotor.setTargetPosition(brTarget);
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
 
-                frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
-                frontLeftMotor.setPower(power);
-                frontRightMotor.setPower(power);
-                backLeftMotor.setPower(power);
-                backRightMotor.setPower(power);
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(-power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(-power);
 
-
-                marathonMap.kickerMotor.setPower(-0.6);
-                sleep(500);
-                marathonMap.kickerMotor.setPower(0);
-                sleep(300);
-
-                marathonMap.kickerMotor.setPower(-0.6);
-                sleep(500);
-                marathonMap.kickerMotor.setPower(0);
-                sleep(300);
-
-                marathonMap.kickerMotor.setPower(-0.6 );
-                sleep(500);
-                marathonMap.kickerMotor.setPower(0);
-                sleep(300);
+        // Debug loop showing encoder ticks
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
 
 
-                // Debug loop showing encoder ticks
-                while (opModeIsActive() &&
-                        (frontLeftMotor.isBusy() ||
-                                frontRightMotor.isBusy() ||
-                                backLeftMotor.isBusy() ||
-                                backRightMotor.isBusy())) {
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
 
 
-                    telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
-                    telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
-                    telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
-                    telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
-                    telemetry.update();
-
-
-                }
+        }
     }
 }
-
 
 
 
