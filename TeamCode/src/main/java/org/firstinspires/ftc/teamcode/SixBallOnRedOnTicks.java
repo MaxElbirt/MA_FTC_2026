@@ -128,12 +128,8 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
     public void shoter() {
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1550);
+        marathonMap.shooterMotor1.setVelocity(1350);
         sleep(3500);
-
-        marathonMap.kickerMotor.setPower(0);
-        sleep(100);
-
 
         marathonMap.kickerMotor.setPower(-0.65);
         sleep(500);
@@ -421,11 +417,9 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
                         marathonMap.hood.setPosition(0.45);
 
-                        marathonMap.shooterMotor1.setVelocity(1300);
+                        marathonMap.shooterMotor1.setVelocity(1350);
                         sleep(4000);
 
-                        marathonMap.kickerMotor.setPower(0);
-                        sleep(200);
 
 
                         marathonMap.kickerMotor.setPower(-0.8);
