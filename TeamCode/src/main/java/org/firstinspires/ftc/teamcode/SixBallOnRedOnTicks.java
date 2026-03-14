@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous
-public class AutoOnTicks extends LinearOpMode {
+public class SixBallOnRedOnTicks extends LinearOpMode {
 
     DcMotorEx frontLeftMotor;
     DcMotorEx frontRightMotor;
