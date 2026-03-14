@@ -58,15 +58,18 @@ public class AutoOnTicks extends LinearOpMode {
 
         shoter();
 
-        turnTicks(1460, 0.3);
+        turnTicks(1420, 0.6);
 
-        moveright(830, 0.3);
+        moveright(830, 0.5);
 
-        moveBack(-1000, 0.5);
+        moveBack(-1000, 0.6);
 
-        movefowroed(   1000, 0.5);
+        movefowroed(   1300, 0.8);
 
-       turnforshoot3balls(800, 0.5);
+       turnforshoot3balls(855  , 0.5);
+
+    getCloser(850, 0.7);
+
     }
 
     public void resetEncoders() {
@@ -125,25 +128,25 @@ public class AutoOnTicks extends LinearOpMode {
     public void shoter() {
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1500);
-        sleep(5000);
+        marathonMap.shooterMotor1.setVelocity(1550);
+        sleep(4000);
 
         marathonMap.kickerMotor.setPower(0);
-        sleep(300);
+        sleep(200);
 
 
         marathonMap.kickerMotor.setPower(-0.65);
         sleep(500);
 
         marathonMap.kickerMotor.setPower(0);
-        sleep(1500);
+        sleep(700);
 
 
         marathonMap.kickerMotor.setPower(-0.65);
         sleep(600);
 
         marathonMap.kickerMotor.setPower(0);
-        sleep(1500);
+        sleep(800);
 
 
         marathonMap.kickerMotor.setPower(-1);
@@ -248,7 +251,7 @@ public class AutoOnTicks extends LinearOpMode {
 
     public void moveBack(int ticks, double power) {
 
-        marathonMap.intakeMotor.setPower(-0.7);
+        marathonMap.intakeMotor.setPower(-1);
 
 
         int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
@@ -381,8 +384,79 @@ public class AutoOnTicks extends LinearOpMode {
 
 
         }
+
+
+            }
+
+            public void getCloser(int ticks, double power) {
+
+                int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+                int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+                int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+                int brTarget = backRightMotor.getCurrentPosition() + ticks;
+
+                frontLeftMotor.setTargetPosition(flTarget);
+                frontRightMotor.setTargetPosition(frTarget);
+                backLeftMotor.setTargetPosition(blTarget);
+                backRightMotor.setTargetPosition(brTarget);
+
+                frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+                frontLeftMotor.setPower(power);
+                frontRightMotor.setPower(power);
+                backLeftMotor.setPower(power);
+                backRightMotor.setPower(power);
+
+
+
+
+                while (opModeIsActive() &&
+                        (frontLeftMotor.isBusy() ||
+                                frontRightMotor.isBusy() ||
+                                backLeftMotor.isBusy() ||
+                                backRightMotor.isBusy())) {
+
+                        marathonMap.hood.setPosition(0.45);
+
+                        marathonMap.shooterMotor1.setVelocity(1300);
+                        sleep(4000);
+
+                        marathonMap.kickerMotor.setPower(0);
+                        sleep(100);
+
+
+                        marathonMap.kickerMotor.setPower(-0.8);
+                        sleep(500);
+
+                        marathonMap.kickerMotor.setPower(0);
+                        sleep(700);
+
+
+                        marathonMap.kickerMotor.setPower(-0.7);
+                        sleep(600);
+
+                        marathonMap.kickerMotor.setPower(0);
+                        sleep(700);
+
+
+                        marathonMap.kickerMotor.setPower(-1);
+                        sleep(600);
+
+
+                        marathonMap.shooterMotor1.setVelocity(0);
+                        marathonMap.kickerMotor.setPower(0);
+
+
+                    }
+
+        }
+
     }
-}
+
+
 
 
 
