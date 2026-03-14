@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
 @Autonomous
 public class SixBallOnRedOnTicks extends LinearOpMode {
 
@@ -68,7 +70,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
        turnforshoot3balls(855  , 0.5);
 
-    getCloser(850, 0.7);
+    getCloser(750, 0.7);
 
     }
 
@@ -128,30 +130,31 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
     public void shoter() {
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1350);
+        marathonMap.shooterMotor1.setVelocity(1300);
         sleep(3500);
 
         marathonMap.kickerMotor.setPower(-0.65);
         sleep(500);
 
         marathonMap.kickerMotor.setPower(0);
-        sleep(700);
+        sleep(550);
 
 
         marathonMap.kickerMotor.setPower(-0.65);
         sleep(600);
 
         marathonMap.kickerMotor.setPower(0);
-        sleep(800);
+        sleep(550);
 
 
         marathonMap.kickerMotor.setPower(-1);
         sleep(600);
 
 
+        telemetry.addData("velocity", marathonMap.shooterMotor1.getVelocity());
+telemetry.update();
         marathonMap.shooterMotor1.setVelocity(0);
         marathonMap.kickerMotor.setPower(0);
-
 
     }
 
@@ -417,7 +420,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
                         marathonMap.hood.setPosition(0.45);
 
-                        marathonMap.shooterMotor1.setVelocity(1350);
+                        marathonMap.shooterMotor1.setVelocity(1270);
                         sleep(4000);
 
 
@@ -439,6 +442,8 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
                         marathonMap.kickerMotor.setPower(-1);
                         sleep(600);
 
+                    telemetry.addData("velocity", marathonMap.shooterMotor1.getVelocity());
+telemetry.update();
 
                         marathonMap.shooterMotor1.setVelocity(0);
                         marathonMap.kickerMotor.setPower(0);
