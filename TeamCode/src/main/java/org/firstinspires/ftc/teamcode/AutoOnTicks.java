@@ -62,7 +62,7 @@ public class AutoOnTicks extends LinearOpMode {
 
         moveright(830, 0.5);
 
-        moveBack(-1000, 0.6);
+        moveBack(-820, 0.6);
 
         movefowroed(   1300, 0.8);
 
@@ -129,10 +129,10 @@ public class AutoOnTicks extends LinearOpMode {
         marathonMap.hood.setPosition(0.45);
 
         marathonMap.shooterMotor1.setVelocity(1550);
-        sleep(4000);
+        sleep(3500);
 
         marathonMap.kickerMotor.setPower(0);
-        sleep(200);
+        sleep(100);
 
 
         marathonMap.kickerMotor.setPower(-0.65);
@@ -425,21 +425,21 @@ public class AutoOnTicks extends LinearOpMode {
                         sleep(4000);
 
                         marathonMap.kickerMotor.setPower(0);
-                        sleep(100);
+                        sleep(200);
 
 
                         marathonMap.kickerMotor.setPower(-0.8);
-                        sleep(500);
+                        sleep(400);
 
                         marathonMap.kickerMotor.setPower(0);
-                        sleep(700);
+                        sleep(800);
 
 
                         marathonMap.kickerMotor.setPower(-0.7);
                         sleep(600);
 
                         marathonMap.kickerMotor.setPower(0);
-                        sleep(700);
+                        sleep(800);
 
 
                         marathonMap.kickerMotor.setPower(-1);
