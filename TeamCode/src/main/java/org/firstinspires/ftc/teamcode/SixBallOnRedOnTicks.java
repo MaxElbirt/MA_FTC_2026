@@ -70,7 +70,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         movefowroed(1300, 0.8);
 
-        turnforshoot3balls(880, 0.5);
+        turnforshoot3balls(890, 0.5);
 
         getCloser(700, 0.7);
 
@@ -163,10 +163,13 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
 marathonMap.hood.setPosition(0.45);
 
-marathonMap.shooterMotor1.setVelocity(1370);
+marathonMap.shooterMotor1.setVelocity(1300);
 sleep(3100);
+marathonMap.kickerMotor.setPower(0);
+sleep(300);
 
-kickerWithTicks(1500,0.26);
+
+kickerWithTicks(1500,0.32);
 
 marathonMap.shooterMotor1.setVelocity(0);
         }
@@ -306,7 +309,7 @@ marathonMap.shooterMotor1.setVelocity(0);
     }
     public void getMore3Balls(){
 
-        kickerWithTicks(715, 0.5);
+        kickerWithTicks(680, 0.5);
 
 
 
@@ -426,10 +429,11 @@ marathonMap.shooterMotor1.setVelocity(0);
 
             marathonMap.hood.setPosition(0.45);
 
-            marathonMap.shooterMotor1.setVelocity(1400);
+            marathonMap.shooterMotor1.setVelocity(1300);
             sleep(3100);
-
-            kickerWithTicks(1500,0.3);
+marathonMap.kickerMotor.setPower(0);
+sleep(300);
+            kickerWithTicks(1500,0.32);
         }
 
 
