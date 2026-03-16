@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class RobotHardwareMap {
@@ -20,14 +20,15 @@ public class RobotHardwareMap {
     public DcMotor kickerMotor = null;
     public IMU imu = null;
     public Servo hood = null;
+    public Limelight3A limelight; // כבר הגדרת, עכשיו נאתחל
     public HardwareMap localHardwareMap = null;
+
     public RobotHardwareMap(){}
     public void init(HardwareMap maHardwareMap){
 
-
-
         //Saving Local Copy Of Hardware Map
         localHardwareMap = maHardwareMap;
+
         //IMU Setup
         imu = maHardwareMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot.LogoFacingDirection logo = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
@@ -35,6 +36,16 @@ public class RobotHardwareMap {
         RevHubOrientationOnRobot onRobotOrientation = new RevHubOrientationOnRobot(logo,usb);
         imu.initialize(new IMU.Parameters(onRobotOrientation));
         imu.resetYaw();
+
+        // --- אתחול ה-Limelight ---
+        // וודא שב-Driver Station הקונפיגורציה של הליימלייט נקראת בדיוק "limelight"
+        limelight = maHardwareMap.get(Limelight3A.class, "limelight");
+
+        // הגדרת פייפליין ברירת מחדל (0)
+        limelight.pipelineSwitch(0);
+
+        // הפעלת המצלמה והתחלת שידור הנתונים
+        limelight.start();
 
         //Naming Motors -> Needs To Be The Same As Config On Driver Station
         frontLeftMotor = maHardwareMap.get(DcMotor.class, Constants.FRONT_LEFT_DRIVE_NAME);
@@ -46,7 +57,6 @@ public class RobotHardwareMap {
         shooterMotor2 = maHardwareMap.get(DcMotorEx.class, Constants.SHOOTER2_NAME);
         intakeMotor = maHardwareMap.get(DcMotor.class, Constants.INTAKE_NAME);
         hood = maHardwareMap.get(Servo.class, Constants.SERVO_NAME);
-
 
         //Drive Motor Direction Setting
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -71,12 +81,9 @@ public class RobotHardwareMap {
         kickerMotor.setPower(0);
         shooterMotor1.setPower(0);
         shooterMotor2.setPower(0);
-
-
     }
 
     public double getHeading(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
-
 }

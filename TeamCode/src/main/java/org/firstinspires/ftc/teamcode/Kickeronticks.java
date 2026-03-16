@@ -10,10 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 @Autonomous
 public class Kickeronticks extends LinearOpMode {
 
-    DcMotorEx frontLeftMotor;
-    DcMotorEx frontRightMotor;
-    DcMotorEx backLeftMotor;
-    DcMotorEx backRightMotor;
+
 
 
     RobotHardwareMap marathonMap = new RobotHardwareMap();
@@ -34,10 +31,10 @@ public class Kickeronticks extends LinearOpMode {
         marathonMap.init(hardwareMap);
 
 
-        frontLeftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        marathonMap.kickerMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         // Hardware mapping
         resetkiceronthicks2();
-        tardetforticks(830, 0.5);
+        tardetforticks(-1100, 0.5);
 
     }
 

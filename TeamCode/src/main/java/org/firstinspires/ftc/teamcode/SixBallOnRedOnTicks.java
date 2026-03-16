@@ -2,9 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import com.qualcomm.hardware.limelightvision.LLResult;
 
 @Autonomous
 public class SixBallOnRedOnTicks extends LinearOpMode {
@@ -35,7 +36,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
         backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
         backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
-
+        marathonMap.kickerMotor = hardwareMap.get(DcMotorEx.class, "kickerMotor");
 
         // Reverse right side (typical drivetrain)
 //        frontRightMotor.setDirection(DcMotorEx.Direction.REVERSE);
@@ -46,7 +47,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         frontRightMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-
+        marathonMap.kickerMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         resetEncoders();
         runUsingIncoder();
 
@@ -56,22 +57,58 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         waitForStart();
 
-        moveTicks(-1000, 0.5);
+        moveTicks(-1070, 0.5);
 
-        shoter();
 
         turnTicks(1420, 0.6);
 
-        moveright(830, 0.5);
+        moveright(815, 0.5);
 
-        moveBack(-820, 0.6);
+        moveBack(-860, 0.6);
 
-        movefowroed(   1300, 0.8);
+     getMore3Balls();
 
-       turnforshoot3balls(855  , 0.5);
+        movefowroed(1300, 0.8);
 
-    getCloser(750, 0.7);
+        turnforshoot3balls(880, 0.5);
 
+        getCloser(700, 0.7);
+
+
+    }
+
+
+    public void limelightAlign(long timeoutMillis) {
+        long startTime = System.currentTimeMillis();
+        double Kp = 0.03;
+        double minPower = 0.15;
+
+        while (opModeIsActive() && (System.currentTimeMillis() - startTime < timeoutMillis)) {
+            LLResult result = marathonMap.limelight.getLatestResult();
+            if (result != null && result.isValid()) {
+                double tx = result.getTx();
+                if (Math.abs(tx) < 1.0) break;
+
+                double steerPower = (tx * Kp);
+                if (steerPower > 0) steerPower += minPower;
+                else steerPower -= minPower;
+
+                frontLeftMotor.setPower(steerPower);
+                backLeftMotor.setPower(steerPower);
+                frontRightMotor.setPower(-steerPower);
+                backRightMotor.setPower(-steerPower);
+            } else {
+                frontLeftMotor.setPower(0);
+                frontRightMotor.setPower(0);
+                backLeftMotor.setPower(0);
+                backRightMotor.setPower(0);
+            }
+        }
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+        runUsingIncoder();
     }
 
     public void resetEncoders() {
@@ -80,6 +117,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         frontRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        marathonMap.kickerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         frontRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -123,40 +161,17 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
             telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
             telemetry.update();
 
+marathonMap.hood.setPosition(0.45);
 
+marathonMap.shooterMotor1.setVelocity(1370);
+sleep(3100);
+
+kickerWithTicks(1500,0.26);
+
+marathonMap.shooterMotor1.setVelocity(0);
         }
     }
 
-    public void shoter() {
-        marathonMap.hood.setPosition(0.45);
-
-        marathonMap.shooterMotor1.setVelocity(1300);
-        sleep(3500);
-
-        marathonMap.kickerMotor.setPower(-0.65);
-        sleep(500);
-
-        marathonMap.kickerMotor.setPower(0);
-        sleep(550);
-
-
-        marathonMap.kickerMotor.setPower(-0.65);
-        sleep(600);
-
-        marathonMap.kickerMotor.setPower(0);
-        sleep(550);
-
-
-        marathonMap.kickerMotor.setPower(-1);
-        sleep(600);
-
-
-        telemetry.addData("velocity", marathonMap.shooterMotor1.getVelocity());
-telemetry.update();
-        marathonMap.shooterMotor1.setVelocity(0);
-        marathonMap.kickerMotor.setPower(0);
-
-    }
 
     public void runUsingIncoder() {
 
@@ -274,23 +289,6 @@ telemetry.update();
         backRightMotor.setPower(power);
 
 
-        marathonMap.kickerMotor.setPower(-0.6);
-        sleep(400);
-        marathonMap.kickerMotor.setPower(0);
-        sleep(300);
-
-        marathonMap.kickerMotor.setPower(-0.6);
-        sleep(400);
-        marathonMap.kickerMotor.setPower(0);
-        sleep(300);
-
-        marathonMap.kickerMotor.setPower(-0.6);
-        sleep(400);
-        marathonMap.kickerMotor.setPower(0);
-        sleep(300);
-
-
-        // Debug loop showing encoder ticks
         while (opModeIsActive() &&
                 (frontLeftMotor.isBusy() ||
                         frontRightMotor.isBusy() ||
@@ -303,12 +301,23 @@ telemetry.update();
             telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
             telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
             telemetry.update();
-
-
         }
+
+    }
+    public void getMore3Balls(){
+
+        kickerWithTicks(715, 0.5);
+
+
+
+
+
+
 
 
     }
+
+
 
     public void movefowroed(int ticks, double power) {
 
@@ -333,18 +342,17 @@ telemetry.update();
         backRightMotor.setPower(power);
 
 
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
 
-
-            while (opModeIsActive() &&
-                    (frontLeftMotor.isBusy() ||
-                            frontRightMotor.isBusy() ||
-                            backLeftMotor.isBusy() ||
-                            backRightMotor.isBusy())) {
-
-            }
+        }
 
 
     }
+
     public void turnforshoot3balls(int ticks, double power) {
 
         int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
@@ -385,92 +393,64 @@ telemetry.update();
         }
 
 
-            }
+    }
 
-            public void getCloser(int ticks, double power) {
+    public void getCloser(int ticks, double power) {
 
-                int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
-                int frTarget = frontRightMotor.getCurrentPosition() + ticks;
-                int blTarget = backLeftMotor.getCurrentPosition() + ticks;
-                int brTarget = backRightMotor.getCurrentPosition() + ticks;
+        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int brTarget = backRightMotor.getCurrentPosition() + ticks;
 
-                frontLeftMotor.setTargetPosition(flTarget);
-                frontRightMotor.setTargetPosition(frTarget);
-                backLeftMotor.setTargetPosition(blTarget);
-                backRightMotor.setTargetPosition(brTarget);
+        frontLeftMotor.setTargetPosition(flTarget);
+        frontRightMotor.setTargetPosition(frTarget);
+        backLeftMotor.setTargetPosition(blTarget);
+        backRightMotor.setTargetPosition(brTarget);
 
-                frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
-                frontLeftMotor.setPower(power);
-                frontRightMotor.setPower(power);
-                backLeftMotor.setPower(power);
-                backRightMotor.setPower(power);
-
-
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(power);
+        backLeftMotor.setPower(power);
+        backRightMotor.setPower(power);
 
 
-                while (opModeIsActive() &&
-                        (frontLeftMotor.isBusy() ||
-                                frontRightMotor.isBusy() ||
-                                backLeftMotor.isBusy() ||
-                                backRightMotor.isBusy())) {
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() ||
+                        frontRightMotor.isBusy() ||
+                        backLeftMotor.isBusy() ||
+                        backRightMotor.isBusy())) {
 
-                        marathonMap.hood.setPosition(0.45);
+            marathonMap.hood.setPosition(0.45);
 
-                        marathonMap.shooterMotor1.setVelocity(1270);
-                        sleep(4000);
+            marathonMap.shooterMotor1.setVelocity(1400);
+            sleep(3100);
 
-
-
-                        marathonMap.kickerMotor.setPower(-0.8);
-                        sleep(400);
-
-                        marathonMap.kickerMotor.setPower(0);
-                        sleep(800);
-
-
-                        marathonMap.kickerMotor.setPower(-0.7);
-                        sleep(600);
-
-                        marathonMap.kickerMotor.setPower(0);
-                        sleep(800);
-
-
-                        marathonMap.kickerMotor.setPower(-1);
-                        sleep(600);
-
-                    telemetry.addData("velocity", marathonMap.shooterMotor1.getVelocity());
-telemetry.update();
-
-                        marathonMap.shooterMotor1.setVelocity(0);
-                        marathonMap.kickerMotor.setPower(0);
-
-
-                    }
-
+            kickerWithTicks(1500,0.3);
         }
+
 
     }
 
+    public void kickerWithTicks(int ticks, double power) {
 
+        int kickerTarget = marathonMap.kickerMotor.getCurrentPosition() - ticks;
 
+        marathonMap.kickerMotor.setTargetPosition(kickerTarget);
 
+        marathonMap.kickerMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
+        marathonMap.kickerMotor.setPower(-power);
 
+        while (opModeIsActive() && marathonMap.kickerMotor.isBusy()) {
 
+            telemetry.addData("kicker ticks", marathonMap.kickerMotor.getCurrentPosition());
+            telemetry.update();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
+    }
+}
 
