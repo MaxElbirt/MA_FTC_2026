@@ -30,7 +30,8 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         marathonMap.init(hardwareMap);
         // Hardware mapping
-
+        marathonMap.limelight.pipelineSwitch(0);
+        marathonMap.limelight.start();
         marathonMap.hood.setPosition(0);
         frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
         frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
@@ -51,14 +52,29 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         resetEncoders();
         runUsingIncoder();
 
+        while (!isStarted() && !isStopRequested()) {
+            LLResult result = marathonMap.limelight.getLatestResult();
+            if (result != null && result.isValid()) {
+                telemetry.addData("Limelight", "Target Locked!");
+                telemetry.addData("TX", result.getTx());
+            } else {
+                telemetry.addLine("Limelight: Searching for target...");
+            }
+            telemetry.update();
+        }
+
 
         telemetry.addLine("Ready");
         telemetry.update();
 
         waitForStart();
 
+
+
         moveTicks(-1070, 0.5);
 
+
+        sleep(1000);
 
         turnTicks(1420, 0.6);
 
@@ -66,13 +82,13 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         moveBack(-860, 0.6);
 
-     getMore3Balls();
+        getMore3Balls();
 
         movefowroed(1300, 0.8);
 
-        turnforshoot3balls(890, 0.5);
+        turnforshoot3balls(882, 0.5);
 
-        getCloser(700, 0.7);
+        getCloser(700, 0.8);
 
 
     }
@@ -80,14 +96,14 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
     public void limelightAlign(long timeoutMillis) {
         long startTime = System.currentTimeMillis();
-        double Kp = 0.03;
+        double Kp = 0.015;
         double minPower = 0.15;
 
         while (opModeIsActive() && (System.currentTimeMillis() - startTime < timeoutMillis)) {
             LLResult result = marathonMap.limelight.getLatestResult();
             if (result != null && result.isValid()) {
                 double tx = result.getTx();
-                if (Math.abs(tx) < 1.0) break;
+                if (Math.abs(tx) < 1) break;
 
                 double steerPower = (tx * Kp);
                 if (steerPower > 0) steerPower += minPower;
@@ -112,6 +128,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
     }
 
     public void resetEncoders() {
+
 
         frontLeftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -147,34 +164,31 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         backLeftMotor.setPower(power);
         backRightMotor.setPower(power);
 
-        // Debug loop showing encoder ticks
+        marathonMap.hood.setPosition(0.45);
+
+        marathonMap.shooterMotor1.setVelocity(1350);
+        sleep(3100);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(450);
+
+
+        kickerWithTicks(1500, 0.32);
+
+        marathonMap.shooterMotor1.setVelocity(0);
+
+
+
         while (opModeIsActive() &&
                 (frontLeftMotor.isBusy() ||
                         frontRightMotor.isBusy() ||
                         backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
+                        backRightMotor.isBusy()));
 
 
-            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
-            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
-            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
-            telemetry.update();
-
-marathonMap.hood.setPosition(0.45);
-
-marathonMap.shooterMotor1.setVelocity(1300);
-sleep(3100);
-marathonMap.kickerMotor.setPower(0);
-sleep(300);
 
 
-kickerWithTicks(1500,0.32);
 
-marathonMap.shooterMotor1.setVelocity(0);
-        }
     }
-
 
     public void runUsingIncoder() {
 
@@ -214,14 +228,7 @@ marathonMap.shooterMotor1.setVelocity(0);
                         backLeftMotor.isBusy() ||
                         backRightMotor.isBusy())) {
 
-
-            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
-            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
-            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
-            telemetry.update();
-
-
+idle();
         }
     }
 
@@ -254,14 +261,7 @@ marathonMap.shooterMotor1.setVelocity(0);
                         backLeftMotor.isBusy() ||
                         backRightMotor.isBusy())) {
 
-
-            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
-            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
-            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
-            telemetry.update();
-
-
+idle();
         }
 
     }
@@ -298,28 +298,16 @@ marathonMap.shooterMotor1.setVelocity(0);
                         backLeftMotor.isBusy() ||
                         backRightMotor.isBusy())) {
 
-
-            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
-            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
-            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
-            telemetry.update();
         }
 
     }
-    public void getMore3Balls(){
 
-        kickerWithTicks(680, 0.5);
+    public void getMore3Balls() {
 
-
-
-
-
-
+        kickerWithTicks(660, 0.49);
 
 
     }
-
 
 
     public void movefowroed(int ticks, double power) {
@@ -386,20 +374,13 @@ marathonMap.shooterMotor1.setVelocity(0);
                         backRightMotor.isBusy())) {
 
 
-            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
-            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
-            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
-            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
-            telemetry.update();
-
-
         }
 
 
     }
 
     public void getCloser(int ticks, double power) {
-
+limelightAlign(2000);
         int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
         int frTarget = frontRightMotor.getCurrentPosition() + ticks;
         int blTarget = backLeftMotor.getCurrentPosition() + ticks;
@@ -427,13 +408,14 @@ marathonMap.shooterMotor1.setVelocity(0);
                         backLeftMotor.isBusy() ||
                         backRightMotor.isBusy())) {
 
+
             marathonMap.hood.setPosition(0.45);
 
             marathonMap.shooterMotor1.setVelocity(1300);
             sleep(3100);
-marathonMap.kickerMotor.setPower(0);
-sleep(300);
-            kickerWithTicks(1500,0.32);
+            marathonMap.kickerMotor.setPower(0);
+            sleep(300);
+            kickerWithTicks(1500, 0.34);
         }
 
 
@@ -457,4 +439,5 @@ sleep(300);
 
     }
 }
+
 
