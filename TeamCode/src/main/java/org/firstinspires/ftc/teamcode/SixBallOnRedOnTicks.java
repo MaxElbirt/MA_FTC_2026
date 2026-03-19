@@ -70,7 +70,6 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         waitForStart();
 
 
-
         moveTicks(-1070, 0.5);
 
 
@@ -78,26 +77,32 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         turnTicks(1420, 0.6);
 
-        moveright(815, 0.5);
+        moveright(700, 0.5);
 
         moveBack(-860, 0.6);
 
         getMore3Balls();
 
-        movefowroed(1300, 0.8);
+        movefowroed(1070, 0.8);
 
         turnforshoot3balls(882, 0.5);
 
         getCloser(700, 0.8);
 
-
+        turnForGettingTheLast3Balls(1770, 0.6);
     }
 
 
     public void limelightAlign(long timeoutMillis) {
+
+        frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
         long startTime = System.currentTimeMillis();
-        double Kp = 0.015;
-        double minPower = 0.15;
+        double Kp = 0.02;
+        double minPower = 0.06;
 
         while (opModeIsActive() && (System.currentTimeMillis() - startTime < timeoutMillis)) {
             LLResult result = marathonMap.limelight.getLatestResult();
@@ -166,28 +171,25 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1350);
+        marathonMap.shooterMotor1.setVelocity(1300);
         sleep(3100);
         marathonMap.kickerMotor.setPower(0);
         sleep(450);
 
 
-        kickerWithTicks(1500, 0.32);
+        kickerWithTicks(1500, 0.3);
 
         marathonMap.shooterMotor1.setVelocity(0);
-
 
 
         while (opModeIsActive() &&
                 (frontLeftMotor.isBusy() ||
                         frontRightMotor.isBusy() ||
                         backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy()));
+                        backRightMotor.isBusy())) {
 
-
-
-
-
+            idle();
+        }
     }
 
     public void runUsingIncoder() {
@@ -222,15 +224,17 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         backRightMotor.setPower(-power);
 
         // Debug loop showing encoder ticks
-        while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
+        while (opModeIsActive() && isRobotBusy())
 
-idle();
-        }
+
+            idle();
+
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
     }
+
 
     public void moveright(int ticks, double power) {
 
@@ -255,14 +259,16 @@ idle();
         backRightMotor.setPower(-power);
 
         // Debug loop showing encoder ticks
-        while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
+        while (opModeIsActive() && isRobotBusy())
 
-idle();
-        }
+
+            idle();
+
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+
 
     }
 
@@ -292,13 +298,15 @@ idle();
         backRightMotor.setPower(power);
 
 
-        while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
+        while (opModeIsActive() && isRobotBusy())
 
-        }
+
+            idle();
+
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
 
     }
 
@@ -339,8 +347,8 @@ idle();
                         backLeftMotor.isBusy() ||
                         backRightMotor.isBusy())) {
 
+            idle();
         }
-
 
     }
 
@@ -367,23 +375,44 @@ idle();
         backRightMotor.setPower(-power);
 
         // Debug loop showing encoder ticks
-        while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
+        while (opModeIsActive() && isRobotBusy())
 
 
-        }
+            idle();
 
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
 
     }
 
     public void getCloser(int ticks, double power) {
-limelightAlign(2000);
-        int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+        limelightAlign(2000);
+
+        marathonMap.hood.setPosition(0.45);
+
+        marathonMap.shooterMotor1.setVelocity(1400);
+        sleep(3100);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(300);
+        kickerWithTicks(1500, 0.32);
+
+
+        marathonMap.shooterMotor1.setVelocity(0);
+        marathonMap.intakeMotor.setPower(0);
+
+
+
+
+          }
+
+
+    public void turnForGettingTheLast3Balls(int ticks, double power) {
+
+        int flTarget = frontLeftMotor.getCurrentPosition() - ticks;
         int frTarget = frontRightMotor.getCurrentPosition() + ticks;
-        int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+        int blTarget = backLeftMotor.getCurrentPosition() - ticks;
         int brTarget = backRightMotor.getCurrentPosition() + ticks;
 
         frontLeftMotor.setTargetPosition(flTarget);
@@ -396,29 +425,47 @@ limelightAlign(2000);
         backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
-        frontLeftMotor.setPower(power);
+        frontLeftMotor.setPower(-power);
         frontRightMotor.setPower(power);
-        backLeftMotor.setPower(power);
+        backLeftMotor.setPower(-power);
         backRightMotor.setPower(power);
 
 
-        while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
 
 
-            marathonMap.hood.setPosition(0.45);
 
-            marathonMap.shooterMotor1.setVelocity(1300);
-            sleep(3100);
-            marathonMap.kickerMotor.setPower(0);
-            sleep(300);
-            kickerWithTicks(1500, 0.34);
+
+        while (opModeIsActive() && isRobotBusy()) {
+
+            idle();
+
+
+            marathonMap.frontRightMotor.setPower(0);
+            marathonMap.frontRightMotor.setPower(0);
+            marathonMap.backRightMotor.setPower(0);
+            marathonMap.backRightMotor.setPower(0);
+
+
         }
+    }
 
 
+    public boolean isRobotBusy() {
+        int tolerance = 25;
+
+
+        int flError = Math.abs(frontLeftMotor.getTargetPosition() - frontLeftMotor.getCurrentPosition());
+        int frError = Math.abs(frontRightMotor.getTargetPosition() - frontRightMotor.getCurrentPosition());
+        int blError = Math.abs(backLeftMotor.getTargetPosition() - backLeftMotor.getCurrentPosition());
+        int brError = Math.abs(backRightMotor.getTargetPosition() - backRightMotor.getCurrentPosition());
+
+
+        boolean isFLBusy = frontLeftMotor.isBusy() && flError > tolerance;
+        boolean isFRBusy = frontRightMotor.isBusy() && frError > tolerance;
+        boolean isBLBusy = backLeftMotor.isBusy() && blError > tolerance;
+        boolean isBRBusy = backRightMotor.isBusy() && brError > tolerance;
+
+        return isFLBusy || isFRBusy || isBLBusy || isBRBusy;
     }
 
     public void kickerWithTicks(int ticks, double power) {
@@ -435,9 +482,12 @@ limelightAlign(2000);
 
             telemetry.addData("kicker ticks", marathonMap.kickerMotor.getCurrentPosition());
             telemetry.update();
-        }
 
+            idle();
+        }
     }
 }
+
+
 
 
