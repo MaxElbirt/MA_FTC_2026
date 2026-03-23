@@ -77,19 +77,27 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         turnTicks(1420, 0.6);
 
-        moveright(700, 0.5);
+        moveright(655, 0.5);
 
-        moveBack(-860, 0.6);
+        moveBack(-920, 0.6);
 
         getMore3Balls();
 
-        movefowroed(1070, 0.8);
+        movefowroed(1120, 0.8);
 
         turnforshoot3balls(882, 0.5);
 
         getCloser(700, 0.8);
 
-        turnForGettingTheLast3Balls(1770, 0.6);
+        turnForGettingTheLast3Balls(845, 0.6);
+
+        MoveLeftForThe3Balls(900,0.5);
+
+        moveBack(-1070, 0.6);
+getMore3Balls();
+
+
+
     }
 
 
@@ -102,7 +110,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
         long startTime = System.currentTimeMillis();
         double Kp = 0.02;
-        double minPower = 0.06;
+        double minPower = 0.04  ;
 
         while (opModeIsActive() && (System.currentTimeMillis() - startTime < timeoutMillis)) {
             LLResult result = marathonMap.limelight.getLatestResult();
@@ -169,10 +177,11 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         backLeftMotor.setPower(power);
         backRightMotor.setPower(power);
 
+
         marathonMap.hood.setPosition(0.45);
 
         marathonMap.shooterMotor1.setVelocity(1300);
-        sleep(3100);
+        sleep(2800);
         marathonMap.kickerMotor.setPower(0);
         sleep(450);
 
@@ -180,6 +189,9 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         kickerWithTicks(1500, 0.3);
 
         marathonMap.shooterMotor1.setVelocity(0);
+
+
+
 
 
         while (opModeIsActive() &&
@@ -190,8 +202,12 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
             idle();
         }
-    }
 
+
+
+
+
+}
     public void runUsingIncoder() {
 
 
@@ -312,7 +328,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
 
     public void getMore3Balls() {
 
-        kickerWithTicks(660, 0.49);
+        kickerWithTicks(650, 0.49);
 
 
     }
@@ -388,24 +404,25 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
     }
 
     public void getCloser(int ticks, double power) {
-        limelightAlign(2000);
 
-        marathonMap.hood.setPosition(0.45);
+            limelightAlign(2000);
 
-        marathonMap.shooterMotor1.setVelocity(1400);
-        sleep(3100);
-        marathonMap.kickerMotor.setPower(0);
-        sleep(300);
-        kickerWithTicks(1500, 0.32);
+            marathonMap.hood.setPosition(0.45);
 
-
-        marathonMap.shooterMotor1.setVelocity(0);
-        marathonMap.intakeMotor.setPower(0);
+            marathonMap.shooterMotor1.setVelocity(1500);
+            sleep(3100);
+            marathonMap.kickerMotor.setPower(0);
+            sleep(300);
+            kickerWithTicks(1500, 0.32);
 
 
+            marathonMap.shooterMotor1.setVelocity(0);
+            marathonMap.intakeMotor.setPower(0);
 
 
-          }
+
+
+        }
 
 
     public void turnForGettingTheLast3Balls(int ticks, double power) {
@@ -431,11 +448,7 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         backRightMotor.setPower(power);
 
 
-
-
-
-
-        while (opModeIsActive() && isRobotBusy()) {
+        while (opModeIsActive() && isRobotBusy())
 
             idle();
 
@@ -445,9 +458,53 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
             marathonMap.backRightMotor.setPower(0);
             marathonMap.backRightMotor.setPower(0);
 
-
-        }
     }
+
+public void MoveLeftForThe3Balls(int ticks ,double power){
+    int flTarget = frontLeftMotor.getCurrentPosition() - ticks;
+    int frTarget = frontRightMotor.getCurrentPosition() + ticks;
+    int blTarget = backLeftMotor.getCurrentPosition() + ticks;
+    int brTarget = backRightMotor.getCurrentPosition() - ticks;
+
+    frontLeftMotor.setTargetPosition(flTarget);
+    frontRightMotor.setTargetPosition(frTarget);
+    backLeftMotor.setTargetPosition(blTarget);
+    backRightMotor.setTargetPosition(brTarget);
+
+    frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+    frontLeftMotor.setPower(-power);
+    frontRightMotor.setPower(power);
+    backLeftMotor.setPower(power);
+    backRightMotor.setPower(-power);
+
+
+    while (opModeIsActive() && isRobotBusy())
+
+        idle();
+
+
+        marathonMap.frontRightMotor.setPower(0);
+        marathonMap.frontRightMotor.setPower(0);
+        marathonMap.backRightMotor.setPower(0);
+        marathonMap.backRightMotor.setPower(0);
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     public boolean isRobotBusy() {
