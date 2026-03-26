@@ -70,33 +70,69 @@ public class SixBallOnRedOnTicks extends LinearOpMode {
         waitForStart();
 
 
-        moveTicks(-1070, 0.5);
 
 
-        sleep(1000);
+        moveTicks(-1100, 0.5);
+sleep(200);
 
         turnTicks(1420, 0.6);
+sleep(200);
 
-        moveright(655, 0.5);
 
-        moveBack(-920, 0.6);
+      moveright(580, 0.5);
+sleep(200);
+
+
+        moveBack(-1000, 0.6);
+ sleep(200);
+
+
+        getMore3Balls();
+sleep(200);
+
+
+        movefowroed(1020, 0.8);
+sleep(200);
+
+
+        turnforshoot3balls(882, 0.5);
+        sleep(130);
+
+
+//       turnForGettingTheLast3Balls(850, 0.6);
+        turnTicks(1470, 0.6);
+        sleep(200);
+
+
+
+
+
+
+        MoveLeftForThe3Balls(910,0.5);
+        sleep(200);
+
+
+
+        moveBack(-1150, 0.6);
+        sleep(200);
+
+
 
         getMore3Balls();
 
-        movefowroed(1120, 0.8);
-
-        turnforshoot3balls(882, 0.5);
-
-        getCloser(700, 0.8);
-
-        turnForGettingTheLast3Balls(845, 0.6);
-
-        MoveLeftForThe3Balls(900,0.5);
-
-        moveBack(-1070, 0.6);
-getMore3Balls();
+        sleep(200);
 
 
+        movefowroed(400, 0.8);
+        sleep(200);
+
+
+        moverightForOpenTheGate(300 ,1);
+        sleep(250);
+
+
+        moveBack(-600, 0.8);
+        sleep(200);
 
     }
 
@@ -110,7 +146,7 @@ getMore3Balls();
 
         long startTime = System.currentTimeMillis();
         double Kp = 0.02;
-        double minPower = 0.04  ;
+        double minPower = 0.02  ;
 
         while (opModeIsActive() && (System.currentTimeMillis() - startTime < timeoutMillis)) {
             LLResult result = marathonMap.limelight.getLatestResult();
@@ -178,34 +214,33 @@ getMore3Balls();
         backRightMotor.setPower(power);
 
 
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy()))
+
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+        telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+        telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+        telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+        telemetry.update();
+        idle();
+
+
+
+        limelightAlign(1000);
+
         marathonMap.hood.setPosition(0.45);
 
-        marathonMap.shooterMotor1.setVelocity(1300);
-        sleep(2800);
+        marathonMap.shooterMotor1.setVelocity(1350);
+        sleep(3100);
         marathonMap.kickerMotor.setPower(0);
-        sleep(450);
+        sleep(300);
+        kickerWithTicks(1500, 0.34);
 
 
-        kickerWithTicks(1500, 0.3);
-
-        marathonMap.shooterMotor1.setVelocity(0);
-
-
-
-
-
-        while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
-
-            idle();
-        }
-
-
-
-
+marathonMap.shooterMotor1.setVelocity(0);
 
 }
     public void runUsingIncoder() {
@@ -240,15 +275,20 @@ getMore3Balls();
         backRightMotor.setPower(-power);
 
         // Debug loop showing encoder ticks
-        while (opModeIsActive() && isRobotBusy())
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy()  &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy())){
 
-
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
             idle();
 
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
+        }
     }
 
 
@@ -275,15 +315,20 @@ getMore3Balls();
         backRightMotor.setPower(-power);
 
         // Debug loop showing encoder ticks
-        while (opModeIsActive() && isRobotBusy())
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy()  &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy())){
 
-
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
             idle();
 
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
+        }
 
 
     }
@@ -314,16 +359,20 @@ getMore3Balls();
         backRightMotor.setPower(power);
 
 
-        while (opModeIsActive() && isRobotBusy())
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy()  &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy())){
 
-
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
             idle();
 
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-
+        }
     }
 
     public void getMore3Balls() {
@@ -358,12 +407,18 @@ getMore3Balls();
 
 
         while (opModeIsActive() &&
-                (frontLeftMotor.isBusy() ||
-                        frontRightMotor.isBusy() ||
-                        backLeftMotor.isBusy() ||
-                        backRightMotor.isBusy())) {
+                (frontLeftMotor.isBusy()  &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy())){
 
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
             idle();
+
         }
 
     }
@@ -390,34 +445,37 @@ getMore3Balls();
         backLeftMotor.setPower(power);
         backRightMotor.setPower(-power);
 
+
         // Debug loop showing encoder ticks
-        while (opModeIsActive() && isRobotBusy())
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy() &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy()))
+
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+        telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+        telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+        telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+        telemetry.update();
+        idle();
 
 
-            idle();
 
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
+        limelightAlign(1500);
 
-    }
+        marathonMap.hood.setPosition(0.45);
 
-    public void getCloser(int ticks, double power) {
-
-            limelightAlign(2000);
-
-            marathonMap.hood.setPosition(0.45);
-
-            marathonMap.shooterMotor1.setVelocity(1500);
-            sleep(3100);
-            marathonMap.kickerMotor.setPower(0);
-            sleep(300);
-            kickerWithTicks(1500, 0.32);
+        marathonMap.shooterMotor1.setVelocity(1440);
+        sleep(3100);
+        marathonMap.kickerMotor.setPower(0);
+        sleep(300);
+        kickerWithTicks(1500, 0.32);
 
 
-            marathonMap.shooterMotor1.setVelocity(0);
-            marathonMap.intakeMotor.setPower(0);
+        marathonMap.shooterMotor1.setVelocity(0);
+marathonMap.intakeMotor.setPower(0);
+
 
 
 
@@ -448,19 +506,24 @@ getMore3Balls();
         backRightMotor.setPower(power);
 
 
-        while (opModeIsActive() && isRobotBusy())
+        while (opModeIsActive() &&
+                (frontLeftMotor.isBusy()  &&
+                        frontRightMotor.isBusy()
+                        && backRightMotor.isBusy()
+                        && backLeftMotor.isBusy())){
 
+            telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+            telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+            telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+            telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+            telemetry.update();
             idle();
 
+        }
 
-            marathonMap.frontRightMotor.setPower(0);
-            marathonMap.frontRightMotor.setPower(0);
-            marathonMap.backRightMotor.setPower(0);
-            marathonMap.backRightMotor.setPower(0);
+        }
 
-    }
-
-public void MoveLeftForThe3Balls(int ticks ,double power){
+public void MoveLeftForThe3Balls(int ticks ,double power) {
     int flTarget = frontLeftMotor.getCurrentPosition() - ticks;
     int frTarget = frontRightMotor.getCurrentPosition() + ticks;
     int blTarget = backLeftMotor.getCurrentPosition() + ticks;
@@ -482,18 +545,65 @@ public void MoveLeftForThe3Balls(int ticks ,double power){
     backRightMotor.setPower(-power);
 
 
-    while (opModeIsActive() && isRobotBusy())
+    while (opModeIsActive() &&
+            (frontLeftMotor.isBusy()  &&
+                    frontRightMotor.isBusy()
+                    && backRightMotor.isBusy()
+                    && backLeftMotor.isBusy())){
 
+        telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+        telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+        telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+        telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+        telemetry.update();
         idle();
 
+    }
 
-        marathonMap.frontRightMotor.setPower(0);
-        marathonMap.frontRightMotor.setPower(0);
-        marathonMap.backRightMotor.setPower(0);
-        marathonMap.backRightMotor.setPower(0);
 
+}
+
+public void moverightForOpenTheGate(int ticks , double power){
+
+
+    int flTarget = frontLeftMotor.getCurrentPosition() + ticks;
+    int frTarget = frontRightMotor.getCurrentPosition() - ticks;
+    int blTarget = backLeftMotor.getCurrentPosition() - ticks;
+    int brTarget = backRightMotor.getCurrentPosition() + ticks;
+
+    frontLeftMotor.setTargetPosition(flTarget);
+    frontRightMotor.setTargetPosition(frTarget);
+    backLeftMotor.setTargetPosition(blTarget);
+    backRightMotor.setTargetPosition(brTarget);
+
+    frontLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    frontRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    backLeftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    backRightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+    frontLeftMotor.setPower(power);
+    frontRightMotor.setPower(-power);
+    backLeftMotor.setPower(-power);
+    backRightMotor.setPower(power);
+
+
+    while (opModeIsActive() &&
+            (frontLeftMotor.isBusy()  &&
+                    frontRightMotor.isBusy()
+                    && backRightMotor.isBusy()
+                    && backLeftMotor.isBusy())){
+
+        telemetry.addData("FL ticks", frontLeftMotor.getCurrentPosition());
+        telemetry.addData("FR ticks", frontRightMotor.getCurrentPosition());
+        telemetry.addData("BL ticks", backLeftMotor.getCurrentPosition());
+        telemetry.addData("BR ticks", backRightMotor.getCurrentPosition());
+        telemetry.update();
+        idle();
 
     }
+
+}
+
 
 
 
@@ -508,7 +618,7 @@ public void MoveLeftForThe3Balls(int ticks ,double power){
 
 
     public boolean isRobotBusy() {
-        int tolerance = 25;
+        int tolerance = 20;
 
 
         int flError = Math.abs(frontLeftMotor.getTargetPosition() - frontLeftMotor.getCurrentPosition());
