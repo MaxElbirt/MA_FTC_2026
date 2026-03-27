@@ -12,7 +12,7 @@ public class LimelightSubSystem {
     private LLResult cachedResult;
 
     public LimelightSubSystem(RobotHardwareMap hardwareMap) {
-        limelight = hardwareMap.getLimelight();
+        limelight = hardwareMap.getLiemlight();
         limelight.setPollRateHz(10);
     }
 
