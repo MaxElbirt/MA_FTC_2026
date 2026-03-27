@@ -34,7 +34,7 @@ public class TeleOpMAnew extends LinearOpMode {
             limelight.update();
 
 
-            if (gamepad1.left_bumper) {
+            if (gamepad1.left_bumper && limelight.hasValidResult()) {
                 double y = 0; // Remember, Y stick value is reversed
                 double x = 0;
                 double rx = limelight.getSteeringToTarget();
@@ -60,8 +60,9 @@ public class TeleOpMAnew extends LinearOpMode {
 
                 double distanceToVelocity = 9.84 * ty + 1275;
                 telemetry.addData("DTT",distanceToVelocity);
-
-                shooterVelocuty = distanceToVelocity;
+                if(limelight.isOkToShoot()) {
+                    shooterVelocuty = distanceToVelocity;
+                }
 
                 marathonMap.hood.setPosition(0.45);
 
