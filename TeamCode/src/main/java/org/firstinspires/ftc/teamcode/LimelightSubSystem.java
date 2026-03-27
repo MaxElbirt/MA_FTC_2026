@@ -1,171 +1,63 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.robot.Robot;
 
-@TeleOp
-public class TeleOpMAnew extends LinearOpMode {
-    RobotHardwareMap marathonMap = new RobotHardwareMap();
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
-    public void runShooterVelocity(double targetVelo) {
-        marathonMap.shooterMotor1.setPower((targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.1));
-        telemetry.addData("Target Power", (targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+public class LimelightSubSystem {
+    private Limelight3A limelight;
+    private LLResult cachedResult;
+
+    public LimelightSubSystem(RobotHardwareMap hardwareMap) {
+        limelight = hardwareMap.getLimelight();
+        limelight.setPollRateHz(10);
     }
 
-    @Override
-    public void runOpMode() throws InterruptedException {
-        double shooterVelocuty = 0;
+    //update method to make sure all data collected uniformly
+    public void update() {
 
+        cachedResult = limelight.getLatestResult();
 
-        marathonMap.init(hardwareMap);
-        LimelightSubSystem limelight = new LimelightSubSystem(marathonMap);
-        HelperFuncs helper = new HelperFuncs();
-        helper.init(hardwareMap);
+    }
 
-        waitForStart();
+    public boolean hasValidResult() {
+        return cachedResult != null && cachedResult.isValid();
+    }
 
-        if (isStopRequested()) return;
+    //get distance from target (no directrion)
+    public double getDistanceFromTarget() {
+        if (!hasValidResult()) return -1;
 
+        double ty = cachedResult.getTy();
+        return (Constants.aprilTagHeightInch - Constants.mountingHeightInch) /
+                Math.tan(Math.toRadians(Constants.mountingAngleDeg + ty));
+    }
 
-        while (opModeIsActive()) {
+    //x axis steering correction
+    public double getSteeringToTarget() {
+        if (!hasValidResult()) return 0;
 
-            limelight.update();
+        double tx = cachedResult.getTx();
+        return tx * 0.03;
+    }
 
+    //getting botpose
+    public double[] getFieldPosition() {
+        if (!hasValidResult()) return null;
 
-            if (gamepad1.left_bumper) {
-                double y = 0; // Remember, Y stick value is reversed
-                double x = 0;
-                double rx = limelight.getSteeringToTarget();
+        Pose3D pose = cachedResult.getBotpose();
+        if (pose == null) return null;
 
-                //changing rotation, correcting to north of field
-                double currHeading = marathonMap.getHeading();
-                double rotX = x * Math.cos(-currHeading) - y * Math.sin(-currHeading);
-                double rotY = x * Math.sin(-currHeading) + y * Math.cos(-currHeading);
-
-                //creating denominator for normalization of stick values (see below)
-                double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-                double frontLeftPower = (rotY + rotX + rx) / denominator;
-                double backLeftPower = (rotY - rotX + rx) / denominator;
-                double frontRightPower = (rotY - rotX - rx) / denominator;
-                double backRightPower = (rotY + rotX - rx) / denominator;
-
-                //Passing power to motor
-                marathonMap.frontLeftMotor.setPower(frontLeftPower);
-                marathonMap.backLeftMotor.setPower(backLeftPower);
-                marathonMap.frontRightMotor.setPower(frontRightPower);
-                marathonMap.backRightMotor.setPower(backRightPower);
-                double ty = limelight.getDistanceFromTarget();
-
-                double distanceToVelocity = 9.84 * ty + 1275;
-                telemetry.addData("DTT",distanceToVelocity);
-
-                shooterVelocuty = distanceToVelocity;
-
-                marathonMap.hood.setPosition(0.45);
-
-                if(gamepad1.left_trigger_pressed){
-                    helper.kickBalls();
-                }
-            } else {
-                double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-                double x = gamepad1.left_stick_x * 1.1;
-                double rx = gamepad1.right_stick_x;
-
-                //changing rotation, correcting to north of field
-                double currHeading = marathonMap.getHeading();
-                double rotX = x * Math.cos(-currHeading) - y * Math.sin(-currHeading);
-                double rotY = x * Math.sin(-currHeading) + y * Math.cos(-currHeading);
-
-                //creating denominator for normalization of stick values (see below)
-                double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-                double frontLeftPower = (rotY + rotX + rx) / denominator;
-                double backLeftPower = (rotY - rotX + rx) / denominator;
-                double frontRightPower = (rotY - rotX - rx) / denominator;
-                double backRightPower = (rotY + rotX - rx) / denominator;
-
-                //Passing power to motor
-                marathonMap.frontLeftMotor.setPower(frontLeftPower);
-                marathonMap.backLeftMotor.setPower(backLeftPower);
-                marathonMap.frontRightMotor.setPower(frontRightPower);
-                marathonMap.backRightMotor.setPower(backRightPower);
-            }
-
-
-            //REV SHOOTER UP
-            if(gamepad1.right_bumper) {
-
-                shooterVelocuty = 1450;
-            }
+        return new double[]{pose.getPosition().x, pose.getPosition().y};
+    }
 
 
 
-            //STOP SHOOTER
-            else if(gamepad1.x){
-                shooterVelocuty = 0;
-                marathonMap.hood.setPosition(0.0);
-            }
-
-
-
-            //CLEAR MECHANISM
-            else if(gamepad1.a) {
-                marathonMap.hood.setPosition(0.45);
-                shooterVelocuty = 1400;
-                marathonMap.kickerMotor.setPower(1);
-                marathonMap.intakeMotor.setPower(1);
-            }
-
-            //EXPELL BALLS FROM INTAKE
-            else if(gamepad1.right_trigger_pressed){
-                marathonMap.intakeMotor.setPower(-1);
-            }
-            //EXPELL BALLS FROM KICKER
-            else if(gamepad1.left_trigger_pressed){
-                marathonMap.kickerMotor.setPower(-1);
-            }
-            //STOP BALL KICKER AND INTAKE
-            else{
-                marathonMap.kickerMotor.setPower(0);
-                marathonMap.intakeMotor.setPower(0);
-            }
-
-            if (gamepad1.dpad_up) {
-                marathonMap.hood.setPosition((0.45));
-                shooterVelocuty = 1400;
-            }
-            else if(gamepad1.dpad_down){
-                marathonMap.hood.setPosition((0.45));
-                shooterVelocuty = 1320;
-            }
-            else if(gamepad1.b){
-                marathonMap.hood.setPosition((0.45));
-                shooterVelocuty = 1800;
-            }
-
-
-            //resetting imu yaw ----> options button+------------------------------------------------------------------------------------------------------------------------------.
-            if (gamepad1.share){
-                marathonMap.imu.resetYaw();
-            }
-            runShooterVelocity(shooterVelocuty);
-            double hoodposition = marathonMap.hood.getPosition();
-            telemetry.addData("hood pos: ", hoodposition);
-            telemetry.addData("shooter1 velo: ", marathonMap.shooterMotor1.getVelocity());
-            telemetry.addData("shooter2 velo", marathonMap.shooterMotor2.getVelocity());
-            telemetry.addData("hood differential: ", Math.abs(marathonMap.shooterMotor1.getVelocity() - marathonMap.shooterMotor2.getVelocity() * -1) );
-            telemetry.addData("back left motor: ", marathonMap.backLeftMotor.getPower());
-            telemetry.addData("back right motor: ", marathonMap.backRightMotor.getPower());
-            telemetry.addData("front left motor: ", marathonMap.frontLeftMotor.getPower());
-            telemetry.addData("front right motor: ", marathonMap.frontRightMotor.getPower());
-            telemetry.addData("tx: ", limelight.getSteeringToTarget());
-            telemetry.addData("ty", limelight.getDistanceFromTarget());
-            telemetry.update();
-
-        }
-
+    //is robot withing shooting range
+    public boolean isOkToShoot() {
+        return hasValidResult() && getDistanceFromTarget() < 98.4;
     }
 }
