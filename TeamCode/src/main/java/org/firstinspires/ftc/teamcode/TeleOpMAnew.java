@@ -10,9 +10,10 @@ public class TeleOpMAnew extends LinearOpMode {
     RobotHardwareMap marathonMap = new RobotHardwareMap();
 
     public void runShooterVelocity(double targetVelo) {
-        marathonMap.shooterMotor1.setPower((targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.01));
-        telemetry.addData("Target Power", (targetVelo / 1500) +  ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
+        marathonMap.shooterMotor1.setPower((targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.1));
+        telemetry.addData("Target Power", (targetVelo / 1500) + ((targetVelo - marathonMap.shooterMotor1.getVelocity()) * 0.0001));
     }
+
     @Override
     public void runOpMode() throws InterruptedException {
         double shooterVelocuty = 0;
@@ -33,10 +34,7 @@ public class TeleOpMAnew extends LinearOpMode {
             limelight.update();
 
 
-
-
-
-            if (gamepad1.dpad_up || gamepad1.dpad_down) {
+            if (gamepad1.left_bumper) {
                 double y = 0; // Remember, Y stick value is reversed
                 double x = 0;
                 double rx = limelight.getSteeringToTarget();
@@ -58,7 +56,18 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.backLeftMotor.setPower(backLeftPower);
                 marathonMap.frontRightMotor.setPower(frontRightPower);
                 marathonMap.backRightMotor.setPower(backRightPower);
+                double ty = limelight.getDistanceFromTarget();
 
+                double distanceToVelocity = 9.84 * ty + 1275;
+                telemetry.addData("DTT",distanceToVelocity);
+
+                shooterVelocuty = distanceToVelocity;
+
+                marathonMap.hood.setPosition(0.45);
+
+                if(gamepad1.left_trigger_pressed){
+                    helper.kickBalls();
+                }
             } else {
                 double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
                 double x = gamepad1.left_stick_x * 1.1;
@@ -83,17 +92,11 @@ public class TeleOpMAnew extends LinearOpMode {
                 marathonMap.backRightMotor.setPower(backRightPower);
             }
 
-            //REV SHOOTER UP WHEN IN RANGE
-            if(limelight.hasValidResult() && limelight.isOkToShoot()){
-                double currentMotorPower = 0;
-                marathonMap.shooterMotor1.setVelocity(1450);
-                currentMotorPower = marathonMap.shooterMotor1.getPower();
-                marathonMap.shooterMotor2.setPower(currentMotorPower);
-            }
 
             //REV SHOOTER UP
-            if(gamepad1.right_bumper){
-                shooterVelocuty= 1450;
+            if(gamepad1.right_bumper) {
+
+                shooterVelocuty = 1450;
             }
 
 
@@ -109,7 +112,7 @@ public class TeleOpMAnew extends LinearOpMode {
             //CLEAR MECHANISM
             else if(gamepad1.a) {
                 marathonMap.hood.setPosition(0.45);
-                shooterVelocuty = -1450;
+                shooterVelocuty = 1400;
                 marathonMap.kickerMotor.setPower(1);
                 marathonMap.intakeMotor.setPower(1);
             }
@@ -130,11 +133,11 @@ public class TeleOpMAnew extends LinearOpMode {
 
             if (gamepad1.dpad_up) {
                 marathonMap.hood.setPosition((0.45));
-                shooterVelocuty = 1350;
+                shooterVelocuty = 1400;
             }
             else if(gamepad1.dpad_down){
                 marathonMap.hood.setPosition((0.45));
-                shooterVelocuty = 1200;
+                shooterVelocuty = 1320;
             }
             else if(gamepad1.b){
                 marathonMap.hood.setPosition((0.45));
@@ -157,6 +160,7 @@ public class TeleOpMAnew extends LinearOpMode {
             telemetry.addData("front left motor: ", marathonMap.frontLeftMotor.getPower());
             telemetry.addData("front right motor: ", marathonMap.frontRightMotor.getPower());
             telemetry.addData("tx: ", limelight.getSteeringToTarget());
+            telemetry.addData("ty", limelight.getDistanceFromTarget());
             telemetry.update();
 
         }

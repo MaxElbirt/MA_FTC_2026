@@ -48,6 +48,9 @@ public class RobotHardwareMap {
         hood = maHardwareMap.get(Servo.class, Constants.SERVO_NAME);
         limelight = maHardwareMap.get(Limelight3A.class, Constants.Limelight);
 
+        limelight.setPollRateHz(50);
+        limelight.start();
+
 
         //Drive Motor Direction Setting
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
