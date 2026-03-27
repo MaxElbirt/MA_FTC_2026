@@ -60,6 +60,7 @@ public class TeleOpMAnew extends LinearOpMode {
 
                 double distanceToVelocity = 9.84 * ty + 1275;
                 telemetry.addData("DTT",distanceToVelocity);
+
                 if(limelight.isOkToShoot()) {
                     shooterVelocuty = distanceToVelocity;
                 }
