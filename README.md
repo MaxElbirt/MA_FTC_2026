@@ -1,3 +1,8 @@
+## CodeWiki Badge:
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/MaxElbirt/MA_FTC_2026)
+
+
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the DECODE (2025-2026) competition season.
