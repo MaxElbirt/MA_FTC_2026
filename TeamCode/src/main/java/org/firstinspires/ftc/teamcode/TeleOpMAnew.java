@@ -22,10 +22,7 @@ public class TeleOpMAnew extends LinearOpMode {
         marathonMap.init(hardwareMap);
         LimelightSubSystem limelight = new LimelightSubSystem(marathonMap);
         HelperFuncs helper = new HelperFuncs();
-        helper.init(hardwareMap);
-
         waitForStart();
-
         if (isStopRequested()) return;
 
 

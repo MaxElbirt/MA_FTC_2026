@@ -11,7 +11,7 @@ public class BackAndShootAutoRed extends LinearOpMode {
         RobotHardwareMap marathonMap = new RobotHardwareMap();
         marathonMap.init(hardwareMap);
         HelperFuncs helper = new HelperFuncs();
-        helper.init(hardwareMap);
+        helper.init(hardwareMap, telemetry);
         waitForStart();
 
         if (isStopRequested()) return;
